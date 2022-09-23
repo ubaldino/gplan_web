@@ -10,6 +10,22 @@ const routes = [
         }
     },
     {
+        path: "/pilares",
+        name: "pilares-index",
+        component: () => import("../pages/pilares/indexPilar.vue"),
+        meta: {
+            layout: "default"
+        }
+    },
+    {
+        path: "/ejes",
+        name: "ejes-index",
+        component: () => import("../pages/ejes/indexEje.vue"),
+        meta: {
+            layout: "default"
+        }
+    },
+    {
         path: "/:pathMatch(.*)*",
         component: () => import("../pages/404.vue"),
         meta: {

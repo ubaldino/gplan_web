@@ -2,6 +2,9 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from "path";
 
+import Components from 'unplugin-vue-components/vite';
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 
 
@@ -15,6 +18,9 @@ export default defineConfig(({mode}) => {
       quasar({
         autoImportComponentCase: 'combined',
         sassVariables: 'src/quasar-variables.sass'
+      }),
+      Components({
+        resolvers: [AntDesignVueResolver()]
       })
     ],
     resolve: {

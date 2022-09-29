@@ -5,22 +5,48 @@ import gql from "graphql-tag";
 
 
 const PILARES_QUERY = gql`
-  query {
-    pilares {
-      codigo
-      denominacion
+{
+  pilares {
+    codigo
+    denominacion
+    ejes {
+      eje {
+        codigo
+        denominacion
+        metas {
+          codigo
+          denominacion
+          resultados {
+            codigo
+            denominacion
+            acciones {
+              codigo
+              denominacion
+            }
+          }
+        }
+      }
     }
   }
+}
+`;
+const PILARES_TREE_QUERY = gql`
+{
+  pilaresTree
+}
 `;
 
 
 export const pilaresStore = defineStore({
   id: 'pilaresStore',
   state: () => ({
-    pilares: []
+    pilares: [],
+    pilaresTree: []
   }),
   getters: {
-    all: (state) => state.pilares
+    all: (state) => state.pilares,
+    allForTable: (state) => state.pilares.map((e,i)=>({key: `${i}`, ...e})),
+    allTree: (state) => state.pilaresTree
   },
   actions: {
     async fetchPilares() {
@@ -30,6 +56,17 @@ export const pilaresStore = defineStore({
           variables: {}
         })
         this.pilares = [...pilares]
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchPilaresTree() {
+      try {
+        const { data : { pilaresTree } } = await apolloClient.query({
+          query: PILARES_TREE_QUERY,
+          variables: {}
+        })
+        this.pilaresTree = [...pilaresTree]
       } catch (error) {
         console.log(error);
       }

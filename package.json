@@ -28,6 +28,8 @@
     "@quasar/vite-plugin": "^1.2.3",
     "@vitejs/plugin-vue": "^3.1.0",
     "sass": "1.32.12",
+    "stylus": "^0.59.0",
+    "stylus-loader": "^7.0.0",
     "vite": "^3.1.0"
   }
 }

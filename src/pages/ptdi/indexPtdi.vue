@@ -266,61 +266,88 @@
         :validate-messages="validateMessages"
         @finish="onFinish"
       >
-        <a-form-item :name="['formtab6programacionfisica', 'lineabase2020']" label="LINEA BASE 2020" :rules="[{ type: 'number', min: 0, max: 100 }]">
-          <a-input-number v-model:value="formState.formtab6programacionfisica.lineabase2020" />
-        </a-form-item>
-        <a-form-item :name="['formtab6programacionfisica', 'metaal2025']" label="META AL 2025" :rules="[{ type: 'number', min: 0, max: 100 }]">
-          <a-input-number v-model:value="formState.formtab6programacionfisica.metaal2025" />
-        </a-form-item>
-        <a-divider style="border-color: #8DB600" dashed />
-        <div align="center">
-        <a-row>
-          <a-col :xs="20" :sm="16" :md="12" :lg="8" :xl="4">2021</a-col>
-          <a-col :xs="20" :sm="16" :md="12" :lg="8" :xl="4">2022</a-col>
-          <a-col :xs="20" :sm="16" :md="12" :lg="8" :xl="4">2023</a-col>
-          <a-col :xs="20" :sm="16" :md="12" :lg="8" :xl="4">2024</a-col>
-          <a-col :xs="20" :sm="16" :md="12" :lg="8" :xl="4">2025</a-col>
-        </a-row>
+      <a-form-item :name="['formtab6programacionfisica', 'lineabase2020']" label="LINEA BASE 2020" :rules="[{ type: 'number', min: 0, max: 100 }]">
+        <a-input-number v-model:value="formState.formtab6programacionfisica.lineabase2020" />
+      </a-form-item>
+      <a-form-item :name="['formtab6programacionfisica', 'meta2025']" label="META AL 2025" :rules="[{ type: 'number', min: 0, max: 100 }]">
+        <a-input-number v-model:value="formState.formtab6programacionfisica.meta2025" />
+      </a-form-item>    
+      <a-divider style="border-color: #8DB600" dashed />
+      <div align="center">
         <a-row>
           <a-col :xs="20" :sm="16" :md="12" :lg="8" :xl="4">
-            <a-form-item :name="['formtab6programacionfisica', 'linea2021']" :rules="[{ type: 'number', min: 0, max: 100 }]">
-              <a-input-number v-model:value="formState.formtab6programacionfisica.linea2021" />
-            </a-form-item>
+            <a-row>
+              <a-col :md="24">
+                2021
+              </a-col>
+              <a-col :md="24">
+                <a-form-item align="center" :name="['formtab6programacionfisica', 'linea2021']" :rules="[{ type: 'number', min: 0, max: 100 }]">
+                  <a-input-number v-model:value="formState.formtab6programacionfisica.linea2021" />
+                </a-form-item>
+              </a-col>
+            </a-row>
           </a-col>
           <a-col :xs="20" :sm="16" :md="12" :lg="8" :xl="4">
-            <a-form-item :name="['formtab6programacionfisica', 'linea2022']" :rules="[{ type: 'number', min: 0, max: 100 }]">
-              <a-input-number v-model:value="formState.formtab6programacionfisica.linea2022" />
-            </a-form-item>
+            <a-row>
+              <a-col :md="24">
+                2022
+              </a-col>
+              <a-col :md="24">
+                <a-form-item align="center" :name="['formtab6programacionfisica', 'linea2022']" :rules="[{ type: 'number', min: 0, max: 100 }]">
+                  <a-input-number v-model:value="formState.formtab6programacionfisica.linea2022" />
+                </a-form-item>
+              </a-col>
+            </a-row>
           </a-col>
           <a-col :xs="20" :sm="16" :md="12" :lg="8" :xl="4">
-            <a-form-item :name="['formtab6programacionfisica', 'linea2023']" :rules="[{ type: 'number', min: 0, max: 100 }]">
-              <a-input-number v-model:value="formState.formtab6programacionfisica.linea2023" />
-            </a-form-item>
+            <a-row>
+              <a-col :md="24">
+                2023
+              </a-col>
+              <a-col :md="24">
+                <a-form-item align="center" :name="['formtab6programacionfisica', 'linea2023']" :rules="[{ type: 'number', min: 0, max: 100 }]">
+                  <a-input-number v-model:value="formState.formtab6programacionfisica.linea2023" />
+                </a-form-item>
+              </a-col>
+            </a-row>          
           </a-col>
           <a-col :xs="20" :sm="16" :md="12" :lg="8" :xl="4">
-            <a-form-item :name="['formtab6programacionfisica', 'linea2024']" :rules="[{ type: 'number', min: 0, max: 100 }]">
-              <a-input-number v-model:value="formState.formtab6programacionfisica.linea2024" />
-            </a-form-item>
+            <a-row>
+              <a-col :md="24">
+                2024
+              </a-col>
+              <a-col :md="24">
+                <a-form-item align="center" :name="['formtab6programacionfisica', 'linea2024']" :rules="[{ type: 'number', min: 0, max: 100 }]">
+                  <a-input-number v-model:value="formState.formtab6programacionfisica.linea2024" />
+                </a-form-item>
+              </a-col>
+            </a-row>
           </a-col>
           <a-col :xs="20" :sm="16" :md="12" :lg="8" :xl="4">
-            <a-form-item :name="['formtab6programacionfisica', 'linea2025']" :rules="[{ type: 'number', min: 0, max: 100 }]">
-              <a-input-number v-model:value="formState.formtab6programacionfisica.linea2025" />
-            </a-form-item>
+            <a-row>
+              <a-col :md="24">
+                2025
+              </a-col>
+              <a-col :md="24">
+                <a-form-item align="center" :name="['formtab6programacionfisica', 'linea2025']" :rules="[{ type: 'number', min: 0, max: 100 }]">
+                  <a-input-number v-model:value="formState.formtab6programacionfisica.linea2025" />
+                </a-form-item>
+              </a-col>
+            </a-row>          
           </a-col>
         </a-row>
-
       </div>
       <a-divider style="border-color: #8DB600" dashed />
-        <a-form-item :name="['formtab6programacionfisica', 'lineabase2020']" label="LINEA BASE 2020" :rules="[{ type: 'number', min: 0, max: 100 }]">
-          <a-input-number v-model:value="formState.formtab6programacionfisica.lineabase2020" />
-        </a-form-item>
-      
+      <a-form-item :name="['formtab6programacionfisica', 'ponderacionprioridad']" label="PONDERACIÓN PRIORIDAD" :rules="[{ type: 'number', min: 0, max: 100 }]">
+        <a-input-number v-model:value="formState.formtab6programacionfisica.ponderacionprioridad" />
+      </a-form-item>
+      <a-form-item :name="['formtab6programacionfisica', 'fuenteinformacionverificacion']" label="FUENTE DE INFORMACIÓN O VERIFICACIÓN" :rules="[{ type: 'number', min: 0, max: 100 }]">
+        <a-input-number v-model:value="formState.formtab6programacionfisica.metaal2025" />
+      </a-form-item>   
         <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
           <a-button type="primary" html-type="submit">GUARDAR PROGRAMACIÓN FÍSICA</a-button>
         </a-form-item>
       </a-form>
-
-
     </a-tab-pane>
 
 

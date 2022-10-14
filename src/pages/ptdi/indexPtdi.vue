@@ -342,7 +342,7 @@
         <a-input-number v-model:value="formState.formtab6programacionfisica.ponderacionprioridad" />
       </a-form-item>
       <a-form-item :name="['formtab6programacionfisica', 'fuenteinformacionverificacion']" label="FUENTE DE INFORMACIÓN O VERIFICACIÓN" :rules="[{ type: 'number', min: 0, max: 100 }]">
-        <a-input-number v-model:value="formState.formtab6programacionfisica.metaal2025" />
+        <a-textarea v-model:value="formState.formtab6programacionfisica.fuenteinformacionverificacion" />
       </a-form-item>   
         <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
           <a-button type="primary" html-type="submit">GUARDAR PROGRAMACIÓN FÍSICA</a-button>
@@ -352,7 +352,24 @@
 
 
 
-    <a-tab-pane key="7" tab="7. TERRITORIALIZACIÓN">Content of Tab Pane 3</a-tab-pane>
+    <a-tab-pane key="7" tab="7. TERRITORIALIZACIÓN">
+      
+      <a-space>
+        <a-select
+          v-model:value="province"
+          style="width: 120px"
+          :options="provinceData.map(pro => ({ value: pro }))"
+        ></a-select>
+        <a-select
+          v-model:value="secondCity"
+          style="width: 120px"
+          :options="cities.map(city => ({ value: city }))"
+        ></a-select>
+      </a-space>
+
+
+
+    </a-tab-pane>
 
 
 
@@ -363,7 +380,7 @@
 <script setup>
   import { DownOutlined} from '@ant-design/icons-vue';
   import { TreeSelect } from 'ant-design-vue';
-  import { defineComponent, ref, reactive, watch } from 'vue';
+  import { defineComponent, ref, reactive, toRefs, computed, watch } from 'vue';
   
   const activeKey = ref('1');
   const value = ref(undefined);
@@ -676,6 +693,29 @@
       span: 16,
     },
   };
+
+  const provinceData = ['Zhejiang', 'Jiangsu'];
+
+  const cityData = {
+    Zhejiang: ['Hangzhou', 'Ningbo', 'Wenzhou'],
+    Jiangsu: ['Nanjing', 'Suzhou', 'Zhenjiang'],
+  };
+
+  const province = provinceData[0];
+
+  const state = reactive({
+    province,
+    provinceData,
+    cityData,
+    secondCity: cityData[province][0],
+  });
+  const cities = computed(() => {
+    return cityData[state.province];
+  });
+  watch(() => state.province, val => {
+    state.secondCity = state.cityData[val][0];
+  });
+  toRefs(state),cities;
 
 
 

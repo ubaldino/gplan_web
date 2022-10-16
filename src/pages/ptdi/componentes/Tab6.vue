@@ -8,6 +8,7 @@
   :validate-messages="validateMessages"
   @finish="onFinish"
 >
+<a-form-item>
   
   <a-space>
     <a-select
@@ -20,15 +21,21 @@
       style="width: 120px"
       :options="regiones.map(region => ({ value: region.nombre }))"
     ></a-select>
-    <!--
+    
     <a-select
       v-model:value="state.municipio"
       style="width: 120px"
-      :options="municipios.map(municipio => ({ value: municipio }))"
+      
     ></a-select>
-  -->
-  </a-space>
 
+    <a-select
+      v-model:value="state.distrito"
+      style="width: 120px"
+      
+    ></a-select>
+
+  </a-space>
+</a-form-item>
   <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
     <a-button type="primary" html-type="submit">GUARDAR TERRITORIALIZACIÓN</a-button>
   </a-form-item>
@@ -243,24 +250,21 @@
     return departamentos.find(e=> e.nombre == state.departamento).regiones;
   });
   
-  
-  /*
   watch(() => state.departamento, nombre => {
-    state.region = state.regionData[val][0];
+    state.region = state.region;
   });
+  
   const municipios = computed(() => {
-    return municipioData[state.region];
+    return state.region;
   });
   
   
 
-  watch(() => state.region, val => {
-    state.municipio = state.municipioData[val][0];
+  watch(() => state.region, nombre => {
+    state.municipio = state.municipio;
   });
-  */
+
   
   const stateAsRefs = toRefs(state);
-
-
 
 </script>

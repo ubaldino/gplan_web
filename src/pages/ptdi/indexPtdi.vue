@@ -17,20 +17,11 @@
       <Tab5/>
     </a-tab-pane>
     <a-tab-pane key="6" tab="6. TERRITORIALIZACIÓN">
-
       <Tab6/>
     </a-tab-pane>
-
-
-
     <a-tab-pane key="7" tab="7. PROGRAMACIÓN FINANCIERA">
       <Tab7/>
-
-
-
-
     </a-tab-pane>
-
   </a-tabs>
 </template>
 

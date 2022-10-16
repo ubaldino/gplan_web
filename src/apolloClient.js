@@ -18,7 +18,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
     if (localStorage.getItem('authorization')) {
         operation.setContext({
             headers: {
-                authorization: `Bearer ${localStorage.getItem('authorization')}`
+                authorization: `${localStorage.getItem('authorization')}`
             }
         })
     }

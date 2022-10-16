@@ -4,8 +4,12 @@ import { Quasar } from 'quasar'
 import { createPinia } from 'pinia'
 import quasarLang from 'quasar/lang/es'
 import quasarIconSet from 'quasar/icon-set/svg-material-icons'
-import defaultLayout from "./layouts/default.vue";
 import { DefaultApolloClient } from "@vue/apollo-composable";
+
+import MainLayout from "./layouts/MainLayout.vue";
+import EmptyLayout from "./layouts/EmptyLayout.vue";
+
+import auth from "./plugins/auth";
 
 import apolloClient from "./apolloClient";
 
@@ -16,8 +20,8 @@ import '@quasar/extras/roboto-font/roboto-font.css'
 import '@quasar/extras/material-icons/material-icons.css'
 
 // A few examples for animations from Animate.css:
-// import @quasar/extras/animate/fadeIn.css
-// import @quasar/extras/animate/fadeOut.css
+// import '@quasar/extras/animate/fadeIn.css'
+// import '@quasar/extras/animate/fadeOut.css'
 
 // Import Quasar css
 import 'quasar/src/css/index.sass'
@@ -34,6 +38,7 @@ app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
   lang: quasarLang,
   iconSet: quasarIconSet,
+
   /*
   config: {
     brand: {
@@ -46,9 +51,12 @@ app.use(Quasar, {
     // ..and many more (check Installation card on each Quasar component/directive/plugin)
   }
   */
+
 })
-app.component("default", defaultLayout)
-app.provide(DefaultApolloClient, apolloClient)
 app.use(pinia)
+app.use(auth)
 app.use(router)
+app.provide(DefaultApolloClient, apolloClient)
+app.component("empty-layout", EmptyLayout)
+app.component("main-layout", MainLayout)
 app.mount('#app')

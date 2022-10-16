@@ -1,35 +1,35 @@
 <template>
     
-      <a-form
-        :model="formState"
-        v-bind="layout"
-        name="nest-messages"
-        :validate-messages="validateMessages"
-        @finish="onFinish"
-      >
-        <a-form-item :name="['formtab1ptdi', 'nombresectorptdi']" label="SECTOR DE PLANIFICACIÓN" >
-          <a-select
-            v-model:value="formState.formtab1ptdi.nombresector"
-            show-search
-            placeholder="Seleccionar Sector"
-            style="width: sm"
-            :options="options"
-            :filter-option="filterOption"
-            @focus="handleFocus"
-            @blur="handleBlur"
-            @change="handleChange"
-          ></a-select>
-        </a-form-item>
-        <a-form-item :name="['formtab1ptdi', 'lineamientoestrategicoptdi']" label="LINEAMIENTO ESTRATÉGICO DE TERRITORIO" >
-          <a-textarea style="width: sm" v-model:value="formState.formtab1ptdi.lineamientoestrategicoptdi" />
-        </a-form-item>
-        <a-form-item :name="['formtab1ptdi', 'objetivoestrategicoptdi']" label="OBJETIVO ESTRATÉGICO" >
-          <a-textarea style="width: sm" v-model:value="formState.formtab1ptdi.objetivoestrategicoptdi" />
-        </a-form-item>
-        <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
-          <a-button type="primary" html-type="submit">GUARDAR SECTOR</a-button>
-        </a-form-item>
-      </a-form>
+  <a-form
+    :model="formState"
+    v-bind="layout"
+    name="nest-messages"
+    :validate-messages="validateMessages"
+    @finish="onFinish"
+  >
+    <a-form-item :name="['formtab1ptdi', 'nombresectorptdi']" label="SECTOR DE PLANIFICACIÓN" >
+      <a-select
+        v-model:value="formState.formtab1ptdi.nombresector"
+        show-search
+        placeholder="Seleccionar Sector"
+        style="width: sm"
+        :options="options"
+        :filter-option="filterOption"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @change="handleChange"
+      ></a-select>
+    </a-form-item>
+    <a-form-item :name="['formtab1ptdi', 'lineamientoestrategicoptdi']" label="LINEAMIENTO ESTRATÉGICO DE TERRITORIO" >
+      <a-textarea style="width: sm" v-model:value="formState.formtab1ptdi.lineamientoestrategicoptdi" />
+    </a-form-item>
+    <a-form-item :name="['formtab1ptdi', 'objetivoestrategicoptdi']" label="OBJETIVO ESTRATÉGICO" >
+      <a-textarea style="width: sm" v-model:value="formState.formtab1ptdi.objetivoestrategicoptdi" />
+    </a-form-item>
+    <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
+      <a-button type="primary" html-type="submit">GUARDAR SECTOR</a-button>
+    </a-form-item>
+  </a-form>
 </template>
 
 

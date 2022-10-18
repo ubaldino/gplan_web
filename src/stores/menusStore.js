@@ -26,6 +26,7 @@ export const useMenusStore = defineStore({
         "icon": "organization",
         "subMenus": []
       },
+     /*
       {
         "name": "matrices",
         "path": "/matrices",
@@ -46,6 +47,7 @@ export const useMenusStore = defineStore({
           }
         ]
       },
+      */
       {
         "name": "migraciones",
         "path": "/migraciones",

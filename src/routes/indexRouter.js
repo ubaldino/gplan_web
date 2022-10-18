@@ -1,14 +1,16 @@
 import { createRouter, createWebHistory, START_LOCATION } from "vue-router";
 import { useMenusStore } from "../stores/menusStore";
-import { useAppStore } from "../stores/appStore";
+
 import { useAuthStore } from "../stores/authStore";
 
 
 const redirectToHomeOnLoggedIn = (to, from, next) => {
-  if (useAuthStore().loggedIn)
-    next({ name: "index", replace: true });
-  else
-    next();
+  if (useAuthStore().loggedIn) {
+      next({ name: "index", replace: true });
+  }
+  else{
+      next();
+  }
 };
 
 
@@ -21,10 +23,11 @@ const routes = [
             layout: "main-layout"
         }
     },
+    /*
     {
         path: "/matrices",
         name: "matrices",
-        component: () => import("../pages/matrices/indexMatrices.vue"),
+        component: () => import("../pages/entidades/indexMatrices.vue"),
         meta: {
             layout: "main-layout"
         }
@@ -37,6 +40,7 @@ const routes = [
             layout: "main-layout"
         }
     },
+    */
     {
         path: "/matrices/pdes",
         name: "pdes-index",
@@ -73,6 +77,38 @@ const routes = [
         path: "/sector/planificacion/tecnico/add",
         name: "sector-add",
         component: () => import("../pages/sector/planificacion/addTecnico.vue"),
+        meta: {
+            layout: "main-layout"
+        }
+    },
+    {
+        path: "/entidades",
+        name: "entidades-index",
+        component: () => import("../pages/entidades/IndexEntidad.vue"),
+        meta: {
+            layout: "main-layout"
+        }
+    },
+    {
+        path: "/entidades/crear",
+        name: "entidades-crear",
+        component: () => import("../pages/entidades/CrearEntidad.vue"),
+        meta: {
+            layout: "main-layout"
+        }
+    },
+    {
+        path: "/entidades/:codigo/ptdi",
+        name: "entidades-ptdi",
+        component: () => import("../pages/entidades/ptdi/IndexPtdi.vue"),
+        meta: {
+            layout: "main-layout"
+        }
+    },
+    {
+        path: "/entidades/:codigo/ptdi/resultados/agregar",
+        name: "entidades-ptdi-resultados-agregar",
+        component: () => import("../pages/entidades/ptdi/AgregarResultado.vue"),
         meta: {
             layout: "main-layout"
         }

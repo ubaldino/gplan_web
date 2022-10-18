@@ -31,7 +31,7 @@
          -->
       </q-tabs>
     </q-header>
-
+    <!--
     <q-drawer
       show-if-above
       v-model="menusStore.leftDrawerOpen"
@@ -54,6 +54,7 @@
         </q-item>
       </q-list>
     </q-drawer>
+    -->
 
     <q-page-container>
       <router-view />

@@ -1,4 +1,7 @@
 <template>
+  <a-row>
+    <a-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1"></a-col>
+    <a-col :xs="22" :sm="22" :md="22" :lg="22" :xl="22">
       <div>
         <H6>Seleccionar Programas y Proyectos</H6>
         <a-tree
@@ -30,6 +33,9 @@
       <div align="right" >
         <a-button class="btn-fixed-width" type="primary" html-type="submit">GUARDAR PROGRAMAS</a-button>
       </div>
+    </a-col>
+    <a-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1"></a-col>
+  </a-row>
 </template>
 <script setup>
   import { DownOutlined} from '@ant-design/icons-vue';

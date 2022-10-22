@@ -6,6 +6,7 @@
         :columns="columns"
         :row-key="(record) => record.codigo"
         :data-source="entidadInstitucionalStore.all"
+        bordered
         @change="handleTableChange"
       >
         <template #bodyCell="{ column, text }">
@@ -33,23 +34,23 @@ onMounted(() => {
 
 const columns = [
   {
-    title: "Codigo",
+    title: "CÓDIGO",
     dataIndex: "codigo",
     sorter: true,
     width: "20%",
   },
   {
-    title: "Sigla",
+    title: "SIGLA",
     dataIndex: "sigla",
     width: "20%",
   },
   {
-    title: "Denominacion",
+    title: "DENOMINACIÓN",
     dataIndex: "denominacion",
     width: "20%",
   },
   {
-    title: "Tipo Entidad",
+    title: "TIPO ENTIDAD",
     dataIndex: ["tipoEntidad", "codigo"],
     key: "tipoEntidad",
     filters: [
@@ -64,7 +65,7 @@ const columns = [
     ],
   },
   {
-    title: "Departamento",
+    title: "DEPARTAMENTO",
     dataIndex: ["departamento", "denominacion"],
     filters: [
       {

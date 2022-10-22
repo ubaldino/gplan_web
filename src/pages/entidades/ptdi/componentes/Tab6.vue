@@ -1,9 +1,11 @@
 <template>
-    <div align="center">
+  <a-row align="center">
+      <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8"></a-col>
+      <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 
 <a-form
   :model="formState"
-  v-bind="layout4"
+  v-bind="layout"
   name="nest-messages"
   :validate-messages="validateMessages"
   @finish="onFinish"
@@ -41,7 +43,9 @@
   </a-form-item>
   
 </a-form>
-</div>
+</a-col>
+      <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8"></a-col>
+  </a-row>
 </template>
 <script setup>
   import { DownOutlined} from '@ant-design/icons-vue';

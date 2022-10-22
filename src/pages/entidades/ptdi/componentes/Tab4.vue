@@ -1,5 +1,8 @@
 <template>
-    <H6>Seleccionar Datos de Resultados</H6>
+  <a-row>
+    <a-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6"></a-col>
+      <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+      <H6>Seleccionar Datos de Resultados</H6>
       <a-form
         :model="formState"
         v-bind="layout"
@@ -49,7 +52,7 @@
           ></a-select>
         </a-form-item>
         <a-form-item :name="['formtab4datoresultado', 'agregarnuevadescripcion']" label="AGREGAR DESCRIPCIÓN">
-          <div align=center>
+          <div align=left>
             <a-button type="primary" color:positive @click="showModal"><template #icon><SearchOutlined /></template>AGREGAR NUEVA DESCRIPCIÓN</a-button>
             <a-modal
               v-model:visible="visible"
@@ -69,6 +72,9 @@
           <a-button type="primary" html-type="submit">GUARDAR RESULTADO</a-button>
         </a-form-item>
       </a-form>
+    </a-col>
+    <a-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6"></a-col>
+  </a-row>
 </template>
 <script setup>
   import { DownOutlined} from '@ant-design/icons-vue';
@@ -89,7 +95,7 @@
 
     formtab4datoresultado: {
       entidad: '',
-      areasorganizacionales: '',
+      areasorganizacionales: [],
       codigoresultado: '',
       descripcion: '',
       detalle: '',

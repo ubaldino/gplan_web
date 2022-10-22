@@ -1,86 +1,90 @@
 <template>
-  <br />
-  <div class="row align-items-center">
-    <div class="col-8">
-      <a-form
-        ref="formRef"
-        name="crear_entidad"
-        :model="form"
-        @finish="onFinish"
-      >
-        <a-form-item
-          name="tipo_entidad_codigo"
-          label="Tipo Entidad"
-          :rules="[{ required: true, message: '' }]"
+    <a-row>
+      <a-col :xs="2" :sm="5" :md="6" :lg="7" :xl="8"></a-col>
+      <a-col :xs="20" :sm="14" :md="12" :lg="10" :xl="8">
+        <h6>Crear Entidad</h6 >
+        <a-form
+          :model="formState"
+          v-bind="layout"
+          :validate-messages="validateMessages"
+          name="crear_entidad"
+          @finish="onFinish"
         >
-          <a-select
-            v-model:value="form.tipo_entidad_codigo"
-            style="width: 320px"
+          <a-form-item
+            name="tipo_entidad_codigo"
+            label="TIPO ENTIDAD"
+            :rules="[{ required: true, message: '' }]"
           >
-            <a-select-option value="NONE">Elija un Tipo</a-select-option>
-            <a-select-option
-              v-for="tipoEnt in tiposEntidadStore.all"
-              :value="tipoEnt.codigo"
+            <a-select
+              v-model:value="form.tipo_entidad_codigo"
+              style="width: sm"
             >
-              {{ tipoEnt.nombre }}
-            </a-select-option>
-          </a-select>
-        </a-form-item>
+              <a-select-option value="NONE">Elija un Tipo</a-select-option>
+              <a-select-option
+                v-for="tipoEnt in tiposEntidadStore.all"
+                :value="tipoEnt.codigo" :key="tipoEnt.codigo"
+              >
+                {{ tipoEnt.nombre }}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
 
-        <a-form-item
-          name="departamento_codigo"
-          label="Tipo Entidad"
-          :rules="[{ required: true, message: '' }]"
-        >
-          <a-select
-            v-model:value="form.departamento_codigo"
-            style="width: 320px"
+          <a-form-item
+            name="departamento_codigo"
+            label="DEPARTAMENTO"
+            :rules="[{ required: true, message: '' }]"
           >
-            <a-select-option value="NONE">
-              Elija un Departamento
-            </a-select-option>
-            <a-select-option
-              v-for="dep in departamentosStore.all"
-              :value="dep.codigo"
+            <a-select
+              v-model:value="form.departamento_codigo"
+              style="width: sm"
             >
-              {{ dep.denominacion }}
-            </a-select-option>
-          </a-select>
-        </a-form-item>
+              <a-select-option value="NONE">
+                Elija un Departamento
+              </a-select-option>
+              <a-select-option
+                v-for="dep in departamentosStore.all"
+                :value="dep.codigo" :key="dep.codigo"
+              >
+                {{ dep.denominacion }}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
 
-        <a-form-item
-          name="codigo"
-          label="Codigo"
-          :rules="[{ required: true, message: 'Debe llenar este campo' }]"
-        >
-          <a-input v-model:value="form.codigo" placeholder="Codigo" />
-        </a-form-item>
+          <a-form-item
+            name="codigo"
+            label="CÓDIGO"
+            :rules="[{ required: true, message: 'Debe llenar este campo' }]"
+          >
+            <a-input v-model:value="form.codigo" placeholder="Debe llenar el Código" />
+          </a-form-item>
 
-        <a-form-item
-          name="denominacion"
-          label="Denominacion"
-          :rules="[{ required: true, message: 'Debe llenar este campo' }]"
-        >
-          <a-input
-            v-model:value="form.denominacion"
-            placeholder="Denominacion"
-          />
-        </a-form-item>
+          <a-form-item
+            name="denominacion"
+            label="DENOMINACIÓN"
+            :rules="[{ required: true, message: 'Debe llenar este campo' }]"
+          >
+            <a-input
+              v-model:value="form.denominacion"
+              placeholder="Debe llenar la Denominación"
+            />
+          </a-form-item>
 
-        <a-form-item
-          name="sigla"
-          label="Sigla"
-          :rules="[{ required: true, message: 'Debe llenar este campo' }]"
-        >
-          <a-input v-model:value="form.sigla" placeholder="Sigla" />
-        </a-form-item>
+          <a-form-item
+            name="sigla"
+            label="SIGLA"
+            :rules="[{ required: true, message: 'Debe llenar este campo' }]"
+          >
+            <a-input v-model:value="form.sigla" placeholder="Debe llenar la Sigla" />
+          </a-form-item>
 
-        <a-form-item>
-          <a-button type="primary" html-type="submit">Registrar</a-button>
-        </a-form-item>
-      </a-form>
-    </div>
-  </div>
+          <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
+            <a-button type="primary" html-type="submit">REGISTRAR</a-button>
+          </a-form-item>
+        </a-form>
+      
+    </a-col>
+    <a-col :xs="2" :sm="5" :md="6" :lg="7" :xl="8"></a-col>
+  </a-row>
 </template>
 
 <script setup>
@@ -89,6 +93,15 @@ import { useRouter } from "vue-router";
 import { useTiposEntidadStore } from "../../stores/tiposEntidadStore";
 import { useDepartamentosStore } from "../../stores/departamentosStore";
 import { useEntidadInstitucionalStore } from "../../stores/entidadInstitucionalStore";
+
+const layout = {
+    labelCol: {
+      span: 8,
+    },
+    wrapperCol: {
+      span: 16,
+    },
+  };
 
 const app = getCurrentInstance();
 const { usuario } = app.appContext.config.globalProperties.$auth;
@@ -122,3 +135,12 @@ const onFinish = async (values) => {
   }
 };
 </script>
+<style scoped>
+.ant-table-striped :deep(.table-striped) td {
+  background-color: #fafafa;
+}
+.padding {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+</style>

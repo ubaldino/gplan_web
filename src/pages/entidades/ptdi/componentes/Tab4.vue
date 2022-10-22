@@ -2,7 +2,7 @@
   <a-row>
     <a-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6"></a-col>
       <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-      <H6>Seleccionar Datos de Resultados</H6>
+      <H6>Formulación de Resultado</H6>
       <a-form
         :model="formState"
         v-bind="layout"

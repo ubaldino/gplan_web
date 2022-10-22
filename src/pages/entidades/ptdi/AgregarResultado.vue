@@ -1,5 +1,5 @@
 <template>
-    <a-row>
+  <a-row>
     <a-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1"></a-col>
     <a-col :xs="22" :sm="22" :md="22" :lg="22" :xl="22">
       <h6>GENERANDO LA MATRIZ PTDI / RESULTADOS</h6>
@@ -10,25 +10,25 @@
         tab-position="top"
         size="small"
       >
-        <a-tab-pane key="1" tab="1. DATOS GENERALES DEL SECTOR DE PLANIFICACIÓN">
+        <a-tab-pane key="1" tab="1. SECTOR DE PLANIFICACIÓN Y LINEAMIENTO ESTRATÉGICO">
           <Tab1 />
         </a-tab-pane>
-        <a-tab-pane key="2" tab="2. SELECTOR PDES">
+        <a-tab-pane key="2" tab="2. SELECTOR ENFOQUE POLÍTICO">
           <Tab2 />
         </a-tab-pane>
         <a-tab-pane key="3" tab="3. SELECCIÓN DE PROGRAMAS Y PROYECTOS">
           <Tab3 />
         </a-tab-pane>
-        <a-tab-pane key="4" tab="4. REGISTRO RESULTADO">
+        <a-tab-pane key="4" tab="4. FORMULACIÓN DE RESULTADO">
           <Tab4 />
         </a-tab-pane>
-        <a-tab-pane key="5" tab="5. INDICADOR RESULTADO">
+        <a-tab-pane key="5" tab="5. INDICADOR Y PROGRAMACIÓN FÍSICA RESULTADO">
           <Tab5 />
         </a-tab-pane>
         <a-tab-pane key="6" tab="6. TERRITORIALIZACIÓN">
           <Tab6 />
         </a-tab-pane>
-        <a-tab-pane key="7" tab="7. PROGRAMACIÓN FINANCIERA">
+        <a-tab-pane key="7" tab="7. PRESUPUESTO QUINQUENAL`">
           <Tab7 />
         </a-tab-pane>
       </a-tabs>

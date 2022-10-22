@@ -17,7 +17,7 @@
         <a-divider style="border-color: #8DB600" dashed />
       </div>
       <div>
-        <h6>RESULTADO SECTOR SELECCIONADO</h6>
+        <h6>Resultado del Programa o Proyecto</h6>
         <a-list size="large" bordered :data-source="data2">
           <template #renderItem="{ item }">
             <a-list-item>{{ item }}</a-list-item>

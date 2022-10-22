@@ -1,50 +1,43 @@
 <template>
+  <h6>Territorialización Resultado</h6>
   <a-row align="center">
-      <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8"></a-col>
-      <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-
-<a-form
-  :model="formState"
-  v-bind="layout"
-  name="nest-messages"
-  :validate-messages="validateMessages"
-  @finish="onFinish"
->
-<a-form-item>
-  
-  <a-space>
-    <a-select
-      v-model:value="state.departamento"
-      style="width: 120px"
-      :options="departamentos.map(dep => ({ value: dep.nombre }))"
-    ></a-select>
-    <a-select
-      v-model:value="state.region"
-      style="width: 120px"
-      :options="regiones.map(region => ({ value: region.nombre }))"
-    ></a-select>
-    
-    <a-select
-      v-model:value="state.municipio"
-      style="width: 120px"
-      
-    ></a-select>
-
-    <a-select
-      v-model:value="state.distrito"
-      style="width: 120px"
-      
-    ></a-select>
-
-  </a-space>
-</a-form-item>
-  <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
-    <a-button type="primary" html-type="submit">GUARDAR TERRITORIALIZACIÓN</a-button>
-  </a-form-item>
-  
-</a-form>
-</a-col>
-      <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8"></a-col>
+    <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8"></a-col>
+    <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+      <a-form
+        :model="formState"
+        v-bind="layout"
+        name="nest-messages"
+        :validate-messages="validateMessages"
+        @finish="onFinish"
+      >
+        <a-form-item>
+          <a-space>
+            <a-select
+              v-model:value="state.departamento"
+              style="width: 120px"
+              :options="departamentos.map(dep => ({ value: dep.nombre }))"
+            ></a-select>
+            <a-select
+              v-model:value="state.region"
+              style="width: 120px"
+              :options="regiones.map(region => ({ value: region.nombre }))"
+            ></a-select>
+            <a-select
+              v-model:value="state.municipio"
+              style="width: 120px"
+            ></a-select>
+            <a-select
+              v-model:value="state.distrito"
+              style="width: 120px"
+            ></a-select>
+          </a-space>
+        </a-form-item>
+        <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
+          <a-button type="primary" html-type="submit">GUARDAR TERRITORIALIZACIÓN</a-button>
+        </a-form-item>
+      </a-form>
+    </a-col>
+    <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8"></a-col>
   </a-row>
 </template>
 <script setup>

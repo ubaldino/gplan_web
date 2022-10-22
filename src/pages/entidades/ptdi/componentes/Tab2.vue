@@ -2,7 +2,7 @@
     <a-row>
     <a-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1"></a-col>
     <a-col :xs="22" :sm="22" :md="22" :lg="22" :xl="22">
-        <H6>Selector para PDES</H6>
+        <H6>Selector Enfoque Político</H6>
         <a-tree
           v-model:expandedKeys="expandedKeys"
           v-model:selectedKeys="selectedKeys"
@@ -16,7 +16,7 @@
         <a-divider style="border-color: #8DB600" dashed />
       </div>
       <div>
-        <h6>RESULTADO</h6>
+        <h6>Resultado</h6>
         <a-table :columns="columns" 
         :data-source="data" bordered>
           <template #bodyCell="{ column, text }">

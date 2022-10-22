@@ -2,7 +2,7 @@
   <a-row>
       <a-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3"></a-col>
       <a-col :xs="18" :sm="18" :md="18" :lg="18" :xl="18">
-        <h6>Datos Generales del Sector de Planificación</h6 >
+        <h6>Sector de Planificación y Lineamiento Estratégico</h6 >
         <a-form
           :model="formState"
           v-bind="layout"

@@ -10,11 +10,11 @@
         :validate-messages="validateMessages"
         @finish="onFinish"
       >
-        <a-form-item :name="['formtab4datoresultado', 'entidad']" label="ENTIDAD">
+        <a-form-item :name="entidad" label="ENTIDAD">
           <a-select
-            v-model:value="formState.formtab4datoresultado.entidad"
+            v-model:value="formState.entidad"
+            placeholder="Elija una Entidad"
             show-search
-            placeholder="Seleccione una Entidad"
             style="width: sm"
             :options="options2"
             :filter-option="filterOption"
@@ -23,26 +23,26 @@
             @change="handleChange"
           ></a-select>
         </a-form-item>
-        <a-form-item :name="['formtab4datoresultado', 'areasorganizacionales']" label="ÁREAS ORGANIZACIONALES">
+        <a-form-item :name="areasorganizacionales" label="ÁREAS ORGANIZACIONALES">
           <a-tree-select
-            v-model:value="formState.formtab4datoresultado.areasorganizacionales"
+            v-model:value="formState.areas_organizacionales"
             style="width: sm"
             :tree-data="treeData3"
             tree-checkable
             allow-clear
             :show-checked-strategy="SHOW_PARENT"
-            placeholder="Seleccionar Área Organizacional"
+            placeholder="Elija las Áreas Organizacionales"
           />
         </a-form-item>
-        <a-form-item :name="['formtab4datoresultado', 'codigoresultado']" label="CÓDIGO DEL RESULTADO">
-          <a-input v-model:value="formState.formtab4datoresultado.codigoresultado" />
+        <a-form-item :name="codigo_resultado" label="CÓDIGO DEL RESULTADO">
+          <a-input v-model:value="formState.codigo_resultado" placeholder="Escriba un Código Resultado"/>
 
         </a-form-item>
-        <a-form-item :name="['formtab4datoresultado', 'descripcion']" label="DESCRIPCIÓN">
+        <a-form-item :name="descripcion" label="DESCRIPCIÓN">
           <a-select
-            v-model:value="formState.formtab4datoresultado.descripcion"
+            v-model:value="formState.descripcion"
             show-search
-            placeholder="Seleccione una Descripción"
+            placeholder="Elija una Descripción"
             style="width: sm"
             :options="options3"
             :filter-option="filterOption"
@@ -51,7 +51,7 @@
             @change="handleChange"
           ></a-select>
         </a-form-item>
-        <a-form-item :name="['formtab4datoresultado', 'agregarnuevadescripcion']" label="AGREGAR DESCRIPCIÓN">
+        <a-form-item :name="agregar_nuevadescripcion" label="AGREGAR DESCRIPCIÓN">
           <div align=left>
             <a-button type="primary" color:positive @click="showModal"><template #icon><SearchOutlined /></template>AGREGAR NUEVA DESCRIPCIÓN</a-button>
             <a-modal
@@ -62,8 +62,8 @@
               :cancel-button-props="{ disabled: false }"
               @ok="handleOk"
             >
-              <a-form-item :name="['formtab4datoresultado', 'detalle']" label="DETALLE">
-                <a-textarea v-model:value="formState.formtab4datoresultado.detalle" />
+              <a-form-item :name="detalle" label="DETALLE">
+                <a-textarea v-model:value="formState.detalle" />
               </a-form-item>
             </a-modal>
           </div>
@@ -92,14 +92,11 @@
     },
   };
   const formState = reactive({
-
-    formtab4datoresultado: {
-      entidad: '',
-      areasorganizacionales: [],
-      codigoresultado: '',
-      descripcion: '',
+      entidad: null,
+      areas_organizacionales: [],
+      codigo_resultado: '',
+      descripcion: null,
       detalle: '',
-    },
   });
 
   const onFinish = values => {

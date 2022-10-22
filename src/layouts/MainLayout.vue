@@ -27,6 +27,17 @@
 
         <q-route-tab to="/login" label="Login" />
         <q-tab label="Logout" @click="logout" />
+
+        <q-select
+          filled
+          v-model="quinqueniosStore.actual"
+          :options="quinqueniosStore.quinquenios"
+          :option-value="(opt) => opt.id"
+          :option-label="
+            (opt) => [opt.gestion_inicio, '-', opt.gestion_fin].join(' ')
+          "
+          label=""
+        />
         <!--
          -->
       </q-tabs>
@@ -69,12 +80,16 @@ import { useMenusStore } from "../stores/menusStore";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/authStore";
 
+import { useQuinqueniosStore } from "../stores/quinqueniosStore";
+
+const quinqueniosStore = useQuinqueniosStore();
 const auth = useAuthStore();
+const menusStore = useMenusStore();
 const router = useRouter();
 
-const menusStore = useMenusStore();
-
-onBeforeMount(() => {});
+onBeforeMount(() => {
+  quinqueniosStore.fetchQuinquenios();
+});
 
 const toggleLeftDrawer = () => {
   menusStore.setLeftDrawer(!menusStore.leftDrawerOpen);

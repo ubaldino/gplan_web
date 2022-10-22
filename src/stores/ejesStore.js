@@ -11,7 +11,7 @@ const EJES_QUERY = gql`
   }
 `
 
-export const ejesStore = defineStore({
+export const useEjesStore = defineStore({
   id: 'ejesStore',
   state: () => ({
     ejes: []

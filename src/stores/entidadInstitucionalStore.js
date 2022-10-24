@@ -13,7 +13,6 @@ const ENTIDAD_MUTATION = gql`
             denominacion
             sigla
             }
-            municipo
         }
     }
 `
@@ -28,7 +27,6 @@ const ENTIDADES_QUERY = gql`
         denominacion
         sigla
       }
-      municipo
       tipoEntidad {
         codigo
         nombre
@@ -44,19 +42,71 @@ const ENTIDAD_QUERY = gql`
       denominacion
       sigla
       departamento {
+        id
         codigo
         denominacion
         sigla
       }
-      municipo
       tipoEntidad {
         codigo
         nombre
         descripcion
       }
+      tecnicos {
+        usuario {
+          username
+          nombres
+          apellido_paterno
+          apellido_materno
+          email
+        }
+      }
+      ptdis {
+        id
+        quinquenio {
+          id
+          gestion_inicio
+          gestion_fin
+        }
+      }
+      ptdi {
+        id
+        quinquenio {
+          id
+          gestion_inicio
+          gestion_fin
+        }
+      }
     }
   }
 `
+
+
+
+const AGREGAR_TECNICO_MUTATION = gql`
+  mutation($data: UsuarioEntidadInputType) {
+  agregarTecnicoEnEntidad(data: $data) {
+    codigo
+    denominacion
+    sigla
+    departamento {
+      id
+      codigo
+      denominacion
+      sigla
+    }
+    municipo
+    tipoEntidad {
+      codigo
+      nombre
+      descripcion
+    }
+  }
+}
+`
+
+
+
 
 export const useEntidadInstitucionalStore = defineStore({
   id: 'EntidadInstitucionalStore',
@@ -76,6 +126,19 @@ export const useEntidadInstitucionalStore = defineStore({
           variables: { data : values }
         })
         res = createEntidadInstitucional
+      } catch (error) {
+        console.log(error);
+      }
+      return res
+    },
+    async agregarTecnicoEnEntidad(data) {
+      let res = null
+      try {
+        const { data : { agregarTecnicoEnEntidad } } = await apolloClient.mutate({
+          mutation: AGREGAR_TECNICO_MUTATION,
+          variables: { data : data }
+        })
+        this.fetchEntidad(data.entidad_codigo)
       } catch (error) {
         console.log(error);
       }

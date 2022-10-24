@@ -1,21 +1,25 @@
 <template>
-  <a-row>
-    <a-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1"></a-col>
-    <a-col :xs="22" :sm="22" :md="22" :lg="22" :xl="22">
+  <a-row type="flex" justify="space-around" align="middle">
+    <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
       <h6>GENERANDO LA MATRIZ PTDI / RESULTADOS</h6>
       <a-tabs
-        v-model:activeKey="activeKey"
+        v-model:activeKey="store.activeKey"
         type="card"
         class="padding"
         tab-position="top"
         size="small"
+        centered
       >
-        <a-tab-pane key="1" tab="1. SECTOR DE PLANIFICACIÓN Y LINEAMIENTO ESTRATÉGICO">
+        <a-tab-pane
+          key="1"
+          tab="1. SECTOR DE PLANIFICACIÓN Y LINEAMIENTO ESTRATÉGICO"
+        >
           <Tab1 />
         </a-tab-pane>
         <a-tab-pane key="2" tab="2. SELECTOR ENFOQUE POLÍTICO">
           <Tab2 />
         </a-tab-pane>
+
         <a-tab-pane key="3" tab="3. SELECCIÓN DE PROGRAMAS Y PROYECTOS">
           <Tab3 />
         </a-tab-pane>
@@ -33,7 +37,6 @@
         </a-tab-pane>
       </a-tabs>
     </a-col>
-    <a-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1"></a-col>
   </a-row>
 </template>
 
@@ -49,9 +52,16 @@ import Tab4 from "./componentes/Tab4.vue";
 import Tab5 from "./componentes/Tab5.vue";
 import Tab6 from "./componentes/Tab6.vue";
 import Tab7 from "./componentes/Tab7.vue";
+
+const store = reactive({
+  activeKey: "7",
+});
 </script>
 
 <style scoped>
+.ant-tabs-tab-btn {
+  font-size: 10px !important;
+}
 .ant-table-striped :deep(.table-striped) td {
   background-color: #fafafa;
 }

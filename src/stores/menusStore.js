@@ -20,6 +20,13 @@ export const useMenusStore = defineStore({
   state: () => ({
     menus: [
       {
+        "name": "usuarios",
+        "path": "/usuarios",
+        "fullName": "Usuarios",
+        "icon": "user",
+        "subMenus": []
+      },
+      {
         "name": "entidades",
         "path": "/entidades",
         "fullName": "Entidades Publicas",

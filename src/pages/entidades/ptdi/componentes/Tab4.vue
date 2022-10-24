@@ -1,7 +1,6 @@
 <template>
-  <a-row>
-    <a-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6"></a-col>
-      <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+  <a-row type="flex" justify="space-around" align="middle">
+    <a-col :xs="24" :sm="20" :md="16" :lg="12" :xl="10">
       <H6>Formulación de Resultado</H6>
       <a-form
         :model="formState"
@@ -23,7 +22,10 @@
             @change="handleChange"
           ></a-select>
         </a-form-item>
-        <a-form-item :name="areasorganizacionales" label="ÁREAS ORGANIZACIONALES">
+        <a-form-item
+          :name="areasorganizacionales"
+          label="ÁREAS ORGANIZACIONALES"
+        >
           <a-tree-select
             v-model:value="formState.areas_organizacionales"
             style="width: sm"
@@ -35,8 +37,10 @@
           />
         </a-form-item>
         <a-form-item :name="codigo_resultado" label="CÓDIGO DEL RESULTADO">
-          <a-input v-model:value="formState.codigo_resultado" placeholder="Escriba un Código Resultado"/>
-
+          <a-input
+            v-model:value="formState.codigo_resultado"
+            placeholder="Escriba un Código Resultado"
+          />
         </a-form-item>
         <a-form-item :name="descripcion" label="DESCRIPCIÓN">
           <a-select
@@ -51,9 +55,15 @@
             @change="handleChange"
           ></a-select>
         </a-form-item>
-        <a-form-item :name="agregar_nuevadescripcion" label="AGREGAR DESCRIPCIÓN">
-          <div align=left>
-            <a-button type="primary" color:positive @click="showModal"><template #icon><SearchOutlined /></template>AGREGAR NUEVA DESCRIPCIÓN</a-button>
+        <a-form-item
+          :name="agregar_nuevadescripcion"
+          label="AGREGAR DESCRIPCIÓN"
+        >
+          <div align="left">
+            <a-button type="primary" color:positive @click="showModal"
+              ><template #icon><SearchOutlined /></template>AGREGAR NUEVA
+              DESCRIPCIÓN</a-button
+            >
             <a-modal
               v-model:visible="visible"
               height="1000px"
@@ -69,125 +79,139 @@
           </div>
         </a-form-item>
         <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
-          <a-button type="primary" html-type="submit">GUARDAR RESULTADO</a-button>
+          <a-button type="primary" html-type="submit"
+            >GUARDAR RESULTADO</a-button
+          >
         </a-form-item>
       </a-form>
     </a-col>
-    <a-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6"></a-col>
   </a-row>
 </template>
 <script setup>
-  import { DownOutlined} from '@ant-design/icons-vue';
-  import { TreeSelect } from 'ant-design-vue';
-  import { defineComponent, ref, reactive, toRefs, computed, watch } from 'vue';
+import { DownOutlined } from "@ant-design/icons-vue";
+import { TreeSelect } from "ant-design-vue";
+import { defineComponent, ref, reactive, toRefs, computed, watch } from "vue";
 
-  const activeKey = ref('1');
-  const value = ref(undefined);
-  const layout = {
-    labelCol: {
-      span: 8,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
-  const formState = reactive({
-      entidad: null,
-      areas_organizacionales: [],
-      codigo_resultado: '',
-      descripcion: null,
-      detalle: '',
-  });
+const activeKey = ref("1");
+const value = ref(undefined);
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
+const formState = reactive({
+  entidad: null,
+  areas_organizacionales: [],
+  codigo_resultado: "",
+  descripcion: null,
+  detalle: "",
+});
 
-  const onFinish = values => {
-    console.log('Success:', values);
-  };
+const onFinish = (values) => {
+  console.log("Success:", values);
+};
 
-  const handleChange = value => {
-    console.log(`selected ${value}`);
-  };
+const handleChange = (value) => {
+  console.log(`selected ${value}`);
+};
 
-  const handleBlur = () => {
-    console.log('blur');
-  };
+const handleBlur = () => {
+  console.log("blur");
+};
 
-  const handleFocus = () => {
-    console.log('focus');
-  };
+const handleFocus = () => {
+  console.log("focus");
+};
 
-  const filterOption = (input, option) => {
-    return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-  };
-  
-  const options2 = ref([{
-    value: 'gadt',
-    label: 'GADT',
-  }, {
-    value: 'alcaldia',
-    label: 'Alcaldía',
-  }, {
-    value: 'gobernacion',
-    label: 'Gobernación',
-  }]);
+const filterOption = (input, option) => {
+  return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+};
 
-  const SHOW_PARENT = TreeSelect.SHOW_PARENT;
+const options2 = ref([
+  {
+    value: "gadt",
+    label: "GADT",
+  },
+  {
+    value: "alcaldia",
+    label: "Alcaldía",
+  },
+  {
+    value: "gobernacion",
+    label: "Gobernación",
+  },
+]);
 
-  const treeData3 = [{
-    title: 'Node1',
-    value: '0-0',
-    children: [{
-      title: 'Child Node1',
-      value: '0-0-0',
-    }],
-  }, {
-    title: 'Node2',
-    value: '0-1',
-    children: [{
-      title: 'Child Node3',
-      value: '0-1-0',
-      disabled: true,
-    }, {
-      title: 'Child Node4',
-      value: '0-1-1',
-    }, {
-      title: 'Child Node5',
-      value: '0-1-2',
-    }],
-  }];
+const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
-  const value2 = ref(['0-0-0']);
-  watch(value, () => {
-    console.log(value.value);
-  });
+const treeData3 = [
+  {
+    title: "Node1",
+    value: "0-0",
+    children: [
+      {
+        title: "Child Node1",
+        value: "0-0-0",
+      },
+    ],
+  },
+  {
+    title: "Node2",
+    value: "0-1",
+    children: [
+      {
+        title: "Child Node3",
+        value: "0-1-0",
+        disabled: true,
+      },
+      {
+        title: "Child Node4",
+        value: "0-1-1",
+      },
+      {
+        title: "Child Node5",
+        value: "0-1-2",
+      },
+    ],
+  },
+];
 
-  const options3 = ref([{
-    value: 'recuperardescripcion1',
-    label: 'RECUPERAR DE DESCRIPCIÓN 1',
-  }, {
-    value: 'recuperardescripcion2',
-    label: 'RECUPERAR DE DESCRIPCIÓN 2',
-  }, {
-    value: 'recuperardescripcion3',
-    label: 'RECUPERAR DE DESCRIPCIÓN 3',
-  }]);
+const value2 = ref(["0-0-0"]);
+watch(value, () => {
+  console.log(value.value);
+});
 
-  const visible = ref(false);
+const options3 = ref([
+  {
+    value: "recuperardescripcion1",
+    label: "RECUPERAR DE DESCRIPCIÓN 1",
+  },
+  {
+    value: "recuperardescripcion2",
+    label: "RECUPERAR DE DESCRIPCIÓN 2",
+  },
+  {
+    value: "recuperardescripcion3",
+    label: "RECUPERAR DE DESCRIPCIÓN 3",
+  },
+]);
 
-  const showModal = () => {
-    visible.value = true;
-  };
+const visible = ref(false);
 
-  const handleOk = e => {
-    console.log(e);
-    visible.value = false;
-  };
+const showModal = () => {
+  visible.value = true;
+};
 
-  const handleCancel = e => {
-    console.log(e);
-    visible.value = false;
-  };
+const handleOk = (e) => {
+  console.log(e);
+  visible.value = false;
+};
 
-
-
-
+const handleCancel = (e) => {
+  console.log(e);
+  visible.value = false;
+};
 </script>

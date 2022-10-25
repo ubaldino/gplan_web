@@ -54,7 +54,7 @@ import Tab6 from "./componentes/Tab6.vue";
 import Tab7 from "./componentes/Tab7.vue";
 
 const store = reactive({
-  activeKey: "7",
+  activeKey: "1",
 });
 </script>
 

@@ -15,13 +15,11 @@
       </a-tree>
     </a-col>
   </a-row>
+
   <a-row type="flex" justify="space-around" align="middle">
-    <a-col :xs="24" :sm="24" :md="24" :lg="23" :xl="23">
+    <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
       <a-divider> PDES </a-divider>
     </a-col>
-  </a-row>
-
-  <a-row type="flex" align="middle">
     <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
       <a-table
         class="ant-table-striped"
@@ -34,11 +32,35 @@
       />
     </a-col>
   </a-row>
+
+  <a-row type="flex" justify="space-around" align="middle">
+    <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+      <a-divider> INDICADORES </a-divider>
+    </a-col>
+    <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+      <a-table
+        class="ant-table-striped"
+        size="middle"
+        :columns="columnsIndicadores"
+        :data-source="pdesIndicadoresStore.pdesIndicadores"
+        :row-class-name="
+          (_record, index) => (index % 2 === 1 ? 'table-striped' : null)
+        "
+      >
+        <template #bodyCell="{ column, obj, index }">
+          <template v-if="column.key === 'index'">
+            {{ 1 + index }}
+          </template>
+        </template>
+      </a-table>
+    </a-col>
+  </a-row>
 </template>
 
 <script setup>
-import { toRefs, computed, ref, reactive, watch } from "vue";
+import { ref, reactive } from "vue";
 import { pilaresStore } from "../../../../stores/pilaresStore";
+import { usePdesIndicadoresStore } from "../../../../stores/pdesIndicadoresStore";
 
 const data = reactive({
   tabla: [],
@@ -72,6 +94,7 @@ const data = reactive({
 data.setDefaultTable();
 
 const pilares = pilaresStore();
+const pdesIndicadoresStore = usePdesIndicadoresStore();
 
 pilares.fetchPilaresTree();
 
@@ -89,13 +112,14 @@ const onSelect = (selectedKeys, { node }) => {
       tipo: parent.node.tipo,
     });
     parent = parent.parent;
-    // if ( parent) {
-    //   Accion
-    // }
   }
-
-  window.test = nodes;
-
+  if (node.tipo == "accion") {
+    pdesIndicadoresStore.fetchPdesIndicadores({
+      accion_codigo: node.codigo,
+    });
+  } else {
+    pdesIndicadoresStore.resetPdesIndicadores();
+  }
   nodes.reverse();
   data.setDataTable(nodes);
 };
@@ -121,9 +145,23 @@ const columns = [
     title: "Accion",
     dataIndex: "accion",
   },
+];
+const columnsIndicadores = [
   {
-    title: "Indicador",
-    dataIndex: "indicador",
+    title: "#",
+    key: "index",
+  },
+  {
+    title: "Descripcion",
+    dataIndex: "descripcion",
+  },
+  {
+    title: "Estimacion 2025",
+    dataIndex: "estimacion_2025",
+  },
+  {
+    title: "Linea Base",
+    dataIndex: "linea_base",
   },
 ];
 </script>

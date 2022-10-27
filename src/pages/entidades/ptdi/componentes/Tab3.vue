@@ -4,10 +4,11 @@
       <div>
         <H6>Seleccionar Programas y Proyectos</H6>
         <a-tree
-          v-model:expandedKeys="expandedKeys"
-          v-model:selectedKeys="selectedKeys"
+          v-model:expandedKeys="selfStore.expandedKeys"
+          v-model:checkedKeys="selfStore.checkedKeys"
+          checkable
           show-line
-          :tree-data="treeData2"
+          :tree-data="aperturaProgramaticaStore.aperturasProgramaticaTree"
         >
           <template #switcherIcon="{ switcherCls }">
             <down-outlined :class="switcherCls" />
@@ -32,20 +33,37 @@
         </a-list>
       </div>
       <div align="right">
-        <a-button class="btn-fixed-width" type="primary" html-type="submit"
-          >GUARDAR PROGRAMAS</a-button
-        >
+        <a-button class="btn-fixed-width" type="primary" html-type="submit">
+          GUARDAR PROGRAMAS
+        </a-button>
       </div>
     </a-col>
   </a-row>
 </template>
 <script setup>
+import { CarryOutOutlined, SmileTwoTone } from "@ant-design/icons-vue";
 import { DownOutlined } from "@ant-design/icons-vue";
 import { TreeSelect } from "ant-design-vue";
-import { ref, reactive, toRefs, computed, watch } from "vue";
+import { reactive, computed, watch } from "vue";
+import { useAperturaProgramaticaStore } from "../../../../stores/aperturaProgramaticaStore";
 
-const expandedKeys = ref(["0-0-0"]);
-const selectedKeys = ref([]);
+const aperturaProgramaticaStore = useAperturaProgramaticaStore();
+
+aperturaProgramaticaStore.fetchAllTree();
+
+const selfStore = reactive({
+  expandedKeys: ["0-0-0"],
+  selectedKeys: [],
+  checkedKeys: [],
+});
+
+watch(
+  () => selfStore.checkedKeys,
+  (newData, oldData) => {
+    console.log("selectedKeys", newData);
+  }
+);
+
 const treeData2 = [
   {
     title: "Papá 1 de Programas y Proyectos",

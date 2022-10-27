@@ -18,6 +18,22 @@ query {
     }
 }
 `
+const CREAR_USUARIO_MUTATION = gql`
+mutation( $data : InputDataUsuario) {
+  crearUsuario(data: $data) {
+    username
+    nombres
+    apellido_paterno
+    apellido_materno
+    email
+    rol {
+      id
+      nombre
+      descripcion
+    }
+  }
+}
+`
 
 export const useUsuariosStore = defineStore({
   id: 'usuariosStore',

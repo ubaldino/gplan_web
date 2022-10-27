@@ -59,14 +59,14 @@ const routes = [
             layout: "main-layout"
         }
     },
-    {
+/*     {
         path: "/ejes",
         name: "ejes-index",
         component: () => import("../pages/ejes/indexEje.vue"),
         meta: {
             layout: "main-layout"
         }
-    },
+    }, */
     {
         path: "/sector/planificacion/tecnico",
         name: "ejes-index",

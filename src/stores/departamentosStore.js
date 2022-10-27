@@ -29,17 +29,11 @@ const DEPARTAMENTOS_SELECT_QUERY = gql`
       codigo
       denominacion
       sigla
-      provincias {
+      municipios {
         id
         codigo
         denominacion
         sigla
-        municipios {
-          id
-          codigo
-          denominacion
-          sigla
-        }
       }
     }
   }

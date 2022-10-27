@@ -9,22 +9,31 @@
         :validate-messages="validateMessages"
         @finish="onFinish"
       >
-        <a-form-item name="nombre_sector_ptdi" label="SECTOR DE PLANIFICACIÓN">
+        <a-form-item
+          name="sector_planificacion_id"
+          label="SECTOR DE PLANIFICACIÓN"
+          :rules="[{ required: true }]"
+        >
           <a-select
-            v-model:value="formState.nombre_sector"
+            v-model:value="formState.sector_planificacion_id"
             show-search
             placeholder="Elija un Sector"
-            style="width: sm"
-            :options="options"
             :filter-option="filterOption"
-            @focus="handleFocus"
-            @blur="handleBlur"
-            @change="handleChange"
-          ></a-select>
+          >
+            <a-select-option
+              v-for="sect in sectoresPlanificacionStore.sectoresPlanificacion"
+              :value="sect.id"
+              :key="sect.id"
+              :nombre="sect.nombre"
+            >
+              {{ sect.nombre }}
+            </a-select-option>
+          </a-select>
         </a-form-item>
         <a-form-item
           name="lineamiento_estrategico_ptdi"
           label="LINEAMIENTO ESTRATÉGICO DE TERRITORIO"
+          :rules="[{ required: true }]"
         >
           <a-textarea
             style="width: sm"
@@ -35,6 +44,7 @@
         <a-form-item
           name="objetivo_estrategico_ptdi"
           label="OBJETIVO ESTRATÉGICO"
+          :rules="[{ required: true }]"
         >
           <a-textarea
             style="width: sm"
@@ -53,8 +63,12 @@
 <script setup>
 import { ref, reactive, toRefs, computed, watch } from "vue";
 
-const activeKey = ref("1");
-const value = ref(undefined);
+import { useSectoresPlanificacionStore } from "../../../../stores/sectoresPlanificacionStore";
+
+const sectoresPlanificacionStore = useSectoresPlanificacionStore();
+
+sectoresPlanificacionStore.fetchAll();
+
 const layout = {
   labelCol: {
     span: 8,
@@ -65,54 +79,21 @@ const layout = {
 };
 
 const validateMessages = {
-  required: "${label} is required!",
-  types: {
-    email: "${label} is not a valid email!",
-    number: "${label} is not a valid number!",
-  },
-  number: {
-    range: "${label} must be between ${min} and ${max}",
-  },
+  required: "${label} es requerido!",
 };
 
 const formState = reactive({
-  nombre_sector: null,
+  sector_planificacion_id: null,
   lineamiento_estrategico_ptdi: "",
   objetivo_estrategico_ptdi: "",
 });
 
-const options = ref([
-  {
-    value: "jack",
-    label: "Jack",
-  },
-  {
-    value: "lucy",
-    label: "Lucy",
-  },
-  {
-    value: "tom",
-    label: "Tom",
-  },
-]);
-
 const onFinish = (values) => {
-  console.log("Success:", values);
-};
-
-const handleChange = (value) => {
-  console.log(`selected ${value}`);
-};
-
-const handleBlur = () => {
-  console.log("blur");
-};
-
-const handleFocus = () => {
-  console.log("focus");
+  console.log("Success:");
+  console.log(values);
 };
 
 const filterOption = (input, option) => {
-  return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+  return option.nombre.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 };
 </script>

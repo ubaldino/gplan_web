@@ -13,16 +13,15 @@ const SECTOR_QUERY = gql`
   }
 `
 
-export const sectoresPlanificacionStore = defineStore({
+export const useSectoresPlanificacionStore = defineStore({
   id: 'sectoresPlanificacionStore',
   state: () => ({
     sectoresPlanificacion: []
   }),
   getters: {
-    all: (state) => state.sectoresPlanificacion
   },
   actions: {
-    async fetchEjes() {
+    async fetchAll() {
       try {
         const { data : { sectoresPlanificacion } } = await apolloClient.query({
           query: SECTOR_QUERY,

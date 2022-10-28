@@ -68,8 +68,8 @@
 
 <script setup>
 import { ref, reactive, onBeforeMount } from "vue";
-import { usePtdiResultadoStore } from "../../../../stores/ptdiResultadoStore";
 import { useSectoresPlanificacionStore } from "../../../../stores/sectoresPlanificacionStore";
+import { usePtdiResultadoStore } from "../../../../stores/ptdiResultadoStore";
 
 const ptdiResultadoStore = usePtdiResultadoStore();
 const sectoresPlanificacionStore = useSectoresPlanificacionStore();

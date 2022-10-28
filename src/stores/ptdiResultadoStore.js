@@ -12,6 +12,14 @@ const CREAR_PTDI_RESULTADO_MUTATION = gql`
         }
     }
 `
+const UPDATE_PTDI_RESULTADO_MUTATION = gql`
+    mutation($where:PtdiResultadoUniqueInput, $data:PtdiResultadoUpdateInput) {
+  updatePtdiResultado(where: $where, data: $data) {
+    id
+    codigo
+  }
+}
+`
 
 const PTDI_RESULTADO_QUERY = gql`
     query($where : PtdiResultadoUniqueInput){
@@ -81,6 +89,19 @@ export const usePtdiResultadoStore = defineStore({
           variables: { data }
         })
         res = createPtdiResultado
+      } catch (error) {
+        console.log(error);
+      }
+      return res
+    },
+    async updatePtdiResultado(where, data) {
+      let res = null
+      try {
+        const { data : { updatePtdiResultado } } = await apolloClient.mutate({
+          mutation: UPDATE_PTDI_RESULTADO_MUTATION,
+          variables: { where, data }
+        })
+        res = updatePtdiResultado
       } catch (error) {
         console.log(error);
       }

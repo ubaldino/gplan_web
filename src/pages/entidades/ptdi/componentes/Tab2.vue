@@ -25,7 +25,7 @@
         class="ant-table-striped"
         size="middle"
         :columns="columns"
-        :data-source="data.tabla"
+        :data-source="selfStore.tabla"
         :row-class-name="
           (_record, index) => (index % 2 === 1 ? 'table-striped' : null)
         "
@@ -55,14 +55,25 @@
       </a-table>
     </a-col>
   </a-row>
+
+  <a-row type="flex" justify="space-around" align="middle">
+    <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+      <a-button type="primary" html-type="submit" @click="guardar">
+        GUARDAR
+      </a-button>
+    </a-col>
+  </a-row>
 </template>
 
 <script setup>
 import { ref, reactive } from "vue";
 import { pilaresStore } from "../../../../stores/pilaresStore";
 import { usePdesIndicadoresStore } from "../../../../stores/pdesIndicadoresStore";
+import { usePtdiResultadoStore } from "../../../../stores/ptdiResultadoStore";
 
-const data = reactive({
+const ptdiResultadoStore = usePtdiResultadoStore();
+
+const selfStore = reactive({
   tabla: [],
   setDataTable(data) {
     for (let i = 0; i < data.length; i++) {
@@ -91,7 +102,7 @@ const data = reactive({
   },
 });
 
-data.setDefaultTable();
+selfStore.setDefaultTable();
 
 const pilares = pilaresStore();
 const pdesIndicadoresStore = usePdesIndicadoresStore();
@@ -102,7 +113,7 @@ const showLine = ref(true);
 const showIcon = ref(false);
 
 const onSelect = (selectedKeys, { node }) => {
-  data.setDefaultTable();
+  selfStore.setDefaultTable();
   let parent = { node, parent: node.parent };
   let nodes = [];
   while (parent) {
@@ -121,7 +132,7 @@ const onSelect = (selectedKeys, { node }) => {
     pdesIndicadoresStore.resetPdesIndicadores();
   }
   nodes.reverse();
-  data.setDataTable(nodes);
+  selfStore.setDataTable(nodes);
 };
 
 const columns = [
@@ -164,6 +175,28 @@ const columnsIndicadores = [
     dataIndex: "linea_base",
   },
 ];
+
+const guardar = async () => {
+  const dataTable = { ...selfStore.tabla[0] };
+  let data = {};
+  let where = {
+    id: ptdiResultadoStore.ptdiResultado.id,
+  };
+
+  if (dataTable.accion !== "") {
+    data = {
+      pdes_pilares_codigo: dataTable.pilar,
+      pdes_ejes_codigo: dataTable.eje,
+      pdes_meta_codigo: dataTable.meta,
+      pdes_resultado_codigo: dataTable.resultado,
+      pdes_accion_codigo: dataTable.accion,
+    };
+  }
+  console.log(dataTable);
+  console.log({ where, data });
+
+  await ptdiResultadoStore.updatePtdiResultado(where, data);
+};
 </script>
 
 <style scoped>

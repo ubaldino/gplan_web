@@ -83,6 +83,7 @@
                         <a-card :title="entidad.sigla" :bordered="false">
                           <p>{{ entidad.denominacion }}</p>
                           <q-btn
+                            v-if="entidad.ptdi"
                             :to="{
                               name: 'entidades-ptdi',
                               params: { codigo: entidad.codigo },
@@ -91,6 +92,17 @@
                             class="btn-fixed-width"
                             color="primary"
                             label="PTDI"
+                          />
+                          <q-btn
+                            v-else
+                            :to="{
+                              name: 'entidades-ptdi-crear',
+                              params: { codigo: entidad.codigo },
+                            }"
+                            align="left"
+                            class="btn-fixed-width"
+                            color="primary"
+                            label="Crear PTDI"
                           />
                           <q-btn
                             :to="{

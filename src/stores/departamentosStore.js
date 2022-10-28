@@ -17,6 +17,22 @@ const DEPARTAMENTOS_QUERY = gql`
           nombre
           descripcion
         }
+        ptdis {
+          id
+          quinquenio {
+            id
+            gestion_inicio
+            gestion_fin
+          }
+        }
+        ptdi {
+          id
+          quinquenio {
+            id
+            gestion_inicio
+            gestion_fin
+          }
+        }
       }
     }
   }

@@ -16,6 +16,14 @@ export default [
         }
     },
     {
+        path: "/entidades/:codigo/ptdi/crear",
+        name: "entidades-ptdi-crear",
+        component: () => import("../pages/entidades/ptdi/CrearPtdi.vue"),
+        meta: {
+            layout: "main-layout"
+        }
+    },
+    {
         path: "/entidades/:codigo/ptdi",
         name: "entidades-ptdi",
         component: () => import("../pages/entidades/ptdi/IndexPtdi.vue"),

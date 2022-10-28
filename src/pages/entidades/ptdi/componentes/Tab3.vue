@@ -1,36 +1,45 @@
 <template>
   <a-row type="flex" justify="space-around" align="middle">
     <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-      <div>
-        <H6>Seleccionar Programas y Proyectos</H6>
-        <a-tree
-          v-model:expandedKeys="selfStore.expandedKeys"
-          v-model:checkedKeys="selfStore.checkedKeys"
-          checkable
-          show-line
-          :tree-data="aperturaProgramaticaStore.aperturasProgramaticaTree"
-        >
-          <template #switcherIcon="{ switcherCls }">
-            <down-outlined :class="switcherCls" />
-          </template>
-        </a-tree>
-      </div>
+      <h6>Seleccionar Programas y Proyectos</h6>
+      <a-tree
+        v-model:expandedKeys="selfStore.expandedKeys"
+        v-model:checkedKeys="selfStore.checkedKeys"
+        checkable
+        show-line
+        :tree-data="aperturaProgramaticaStore.aperturasProgramaticaTree"
+      >
+        <template #switcherIcon="{ switcherCls }">
+          <down-outlined :class="switcherCls" />
+        </template>
+      </a-tree>
+    </a-col>
+  </a-row>
+
+  <a-row type="flex" justify="space-around" align="middle">
+    <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+      <a-divider> PDES </a-divider>
+    </a-col>
+    <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+      <a-table
+        class="ant-table-striped"
+        size="middle"
+        :columns="columns"
+        :data-source="proyectoProgramaStore.proyectosPrograma"
+        :row-class-name="
+          (_record, index) => (index % 2 === 1 ? 'table-striped' : null)
+        "
+      />
+    </a-col>
+  </a-row>
+
+  <a-row type="flex" justify="space-around" align="middle">
+    <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
       <div>
         <a-divider style="border-color: #8db600" dashed />
       </div>
       <div>
         <h6>Resultado del Programa o Proyecto</h6>
-        <a-list size="large" bordered :data-source="data2">
-          <template #renderItem="{ item }">
-            <a-list-item>{{ item }}</a-list-item>
-          </template>
-          <template #header>
-            <div>Header</div>
-          </template>
-          <template #footer>
-            <div>Footer</div>
-          </template>
-        </a-list>
       </div>
       <div align="right">
         <a-button class="btn-fixed-width" type="primary" html-type="submit">
@@ -46,8 +55,10 @@ import { DownOutlined } from "@ant-design/icons-vue";
 import { TreeSelect } from "ant-design-vue";
 import { reactive, computed, watch } from "vue";
 import { useAperturaProgramaticaStore } from "../../../../stores/aperturaProgramaticaStore";
+import { useProyectoProgramaStore } from "../../../../stores/proyectoProgramaStore";
 
 const aperturaProgramaticaStore = useAperturaProgramaticaStore();
+const proyectoProgramaStore = useProyectoProgramaStore();
 
 aperturaProgramaticaStore.fetchAllTree();
 
@@ -60,67 +71,46 @@ const selfStore = reactive({
 watch(
   () => selfStore.checkedKeys,
   (newData, oldData) => {
-    console.log("selectedKeys", newData);
+    let categorias_programatica = [...newData].filter(
+      (e) => !e.startsWith("a::")
+    );
+    proyectoProgramaStore.fetchAll({ categorias_programatica });
   }
 );
 
-const treeData2 = [
+const columns = [
   {
-    title: "Papá 1 de Programas y Proyectos",
-    key: "0-0",
-    children: [
-      {
-        title: "Hijo 1-0",
-        key: "0-0-0",
-        children: [
-          {
-            title: "Dato 1",
-            key: "0-0-0-0",
-          },
-          {
-            title: "Dato 2",
-            key: "0-0-0-1",
-          },
-          {
-            title: "Dato 3",
-            key: "0-0-0-2",
-          },
-        ],
-      },
-      {
-        title: "Hijo 1-1",
-        key: "0-0-1",
-        children: [
-          {
-            title: "Dato 4",
-            key: "0-0-1-0",
-          },
-        ],
-      },
-      {
-        title: "Hijo 1-2",
-        key: "0-0-2",
-        children: [
-          {
-            title: "Dato 5",
-            key: "0-0-2-0",
-          },
-          {
-            title: "Dato 6",
-            key: "0-0-2-1",
-          },
-        ],
-      },
-    ],
+    title: "Unidad Ejecutora",
+    dataIndex: ["ue", "nombre"],
   },
-];
-
-const data2 = [
-  "Racing car sprays burning fuel into crowd.",
-  "Japanese princess to wed commoner.",
-  "Australian walks 100km after outback crash.",
-  "Man charged over missing wedding girl.",
-  "Los Angeles battles huge wildfires.",
+  {
+    title: "Categoria Programatica",
+    dataIndex: "categoria_programatica",
+  },
+  {
+    title: "Nombre",
+    dataIndex: "nombre",
+  },
+  {
+    title: "Presupuesto 2021",
+    dataIndex: "presupuesto_2021",
+  },
+  {
+    title: "Presupuesto 2022",
+    dataIndex: "presupuesto_2022",
+  },
+  {
+    title: "Presupuesto 2023",
+    dataIndex: "presupuesto_2023",
+  },
+  {
+    title: "Presupuesto 2024",
+    dataIndex: "presupuesto_2024",
+  },
+  {
+    title: "Presupuesto 2025",
+    dataIndex: "presupuesto_2025",
+  },
 ];
 
 const SHOW_PARENT = TreeSelect.SHOW_PARENT;

@@ -46,5 +46,13 @@ export default [
         meta: {
             layout: "main-layout"
         }
+    },
+    {
+        path: "/entidades/:codigo/ptdi/resultados/:re_id/editar",
+        name: "entidades-ptdi-resultados-editar",
+        component: () => import("../pages/entidades/ptdi/EditarResultado.vue"),
+        meta: {
+            layout: "main-layout"
+        }
     }
 ]

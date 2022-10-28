@@ -3,7 +3,7 @@
     <a-col :xs="24" :sm="20" :md="16" :lg="12" :xl="10">
       <h6>Sector de Planificación y Lineamiento Estratégico</h6>
       <a-form
-        :model="formState"
+        :model="ptdiResultadoStore"
         layout="vertical"
         name="nest-messages"
         :validate-messages="validateMessages"
@@ -12,10 +12,12 @@
         <a-form-item
           name="sector_planificacion_id"
           label="SECTOR DE PLANIFICACIÓN"
-          :rules="[{ required: true }]"
+          v-if="ptdiResultadoStore.ptdiResultado.sectorPlanificacion"
         >
           <a-select
-            v-model:value="formState.sector_planificacion_id"
+            v-model:value="
+              ptdiResultadoStore.ptdiResultado.sectorPlanificacion.id
+            "
             show-search
             placeholder="Elija un Sector"
             :filter-option="filterOption"
@@ -37,7 +39,9 @@
         >
           <a-textarea
             style="width: sm"
-            v-model:value="formState.lineamiento_estrategico_ptdi"
+            v-model:value="
+              ptdiResultadoStore.ptdiResultado.lineamiento_estrat_territorio
+            "
             placeholder="Escriba el Lineamiento Estratégico de Desarrollo"
           />
         </a-form-item>
@@ -48,7 +52,9 @@
         >
           <a-textarea
             style="width: sm"
-            v-model:value="formState.objetivo_estrategico_ptdi"
+            v-model:value="
+              ptdiResultadoStore.ptdiResultado.objetivo_estrategico
+            "
             placeholder="Escriba el Objetivo Estratégico"
           />
         </a-form-item>
@@ -61,13 +67,15 @@
 </template>
 
 <script setup>
-import { ref, reactive, toRefs, computed, watch } from "vue";
-
+import { ref, reactive, onBeforeMount } from "vue";
+import { usePtdiResultadoStore } from "../../../../stores/ptdiResultadoStore";
 import { useSectoresPlanificacionStore } from "../../../../stores/sectoresPlanificacionStore";
 
+const ptdiResultadoStore = usePtdiResultadoStore();
 const sectoresPlanificacionStore = useSectoresPlanificacionStore();
-
 sectoresPlanificacionStore.fetchAll();
+
+onBeforeMount(() => {});
 
 const layout = {
   labelCol: {

@@ -1,15 +1,15 @@
 <template>
   <a-row type="flex" justify="space-around" align="middle">
     <a-col :xs="24" :sm="20" :md="16" :lg="12" :xl="10">
-      <H6>Formulación de Resultado</H6>
+      <h6>Formulación de Resultado</h6>
       <a-form
-        :model="formState"
+        :model="ptdiResultadoStore.ptdiResultado"
         v-bind="layout"
-        name="nest-messages"
+        name="resultado_form"
         :validate-messages="validateMessages"
         @finish="onFinish"
       >
-        <a-form-item :name="entidad" label="ENTIDAD">
+        <a-form-item name="entidad_codigo" label="ENTIDAD">
           <a-select
             v-model:value="ptdiResultadoStore.ptdiResultado.entidad_codigo"
             show-search
@@ -26,36 +26,34 @@
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item :name="area_organizacional" label="ÁREAS ORGANIZACIONALES">
+        <a-form-item name="area_organizacional" label="ÁREAS ORGANIZACIONALES">
           <a-textarea
             v-model:value="ptdiResultadoStore.ptdiResultado.area_organizacional"
             placeholder="Escriba Las areas organizacionales"
           />
         </a-form-item>
-        <a-form-item :name="codigo" label="CÓDIGO DEL RESULTADO">
+        <a-form-item name="codigo" label="CÓDIGO DEL RESULTADO">
           <a-input
             v-model:value="ptdiResultadoStore.ptdiResultado.codigo"
             placeholder="Escriba un Código Resultado"
           />
         </a-form-item>
-        <a-form-item :name="descripcion" label="DESCRIPCIÓN">
+        <a-form-item name="descripcion_resultado" label="DESCRIPCIÓN">
           <a-select
-            v-model:value="formState.descripcion"
+            v-model:value="
+              ptdiResultadoStore.ptdiResultado.descripcion_resultado
+            "
             show-search
             placeholder="Elija una Descripción"
-            style="width: sm"
             :options="options3"
             :filter-option="filterOption"
             @focus="handleFocus"
             @blur="handleBlur"
             @change="handleChange"
           ></a-select>
-          <a-button type="primary" shape="square">+</a-button>
+          <!-- <a-button type="primary" shape="square">+</a-button> -->
         </a-form-item>
-        <a-form-item
-          :name="agregar_nuevadescripcion"
-          label="AGREGAR DESCRIPCIÓN"
-        >
+        <a-form-item>
           <div align="left">
             <a-button type="primary" color:positive @click="showModal">
               <template #icon>
@@ -71,8 +69,8 @@
               :cancel-button-props="{ disabled: false }"
               @ok="handleOk"
             >
-              <a-form-item :name="detalle" label="DETALLE">
-                <a-textarea v-model:value="formState.detalle" />
+              <a-form-item name="nueva_descripcion" label="Nueva Descripcion">
+                <a-textarea v-model:value="formState.nueva_descripcion" />
               </a-form-item>
             </a-modal>
           </div>
@@ -87,18 +85,16 @@
   </a-row>
 </template>
 <script setup>
-import { TreeSelect } from "ant-design-vue";
 import { ref, reactive, computed, watch } from "vue";
 import { useEntidadInstitucionalStore } from "../../../../stores/entidadInstitucionalStore";
 import { usePtdiResultadoStore } from "../../../../stores/ptdiResultadoStore";
+import { SearchOutlined } from "@ant-design/icons-vue";
 
 const ptdiResultadoStore = usePtdiResultadoStore();
-
 const entidadInstitucionalStore = useEntidadInstitucionalStore();
 
 entidadInstitucionalStore.fetchEntidadesSelect();
 
-const value = ref(undefined);
 const layout = {
   labelCol: {
     span: 8,
@@ -108,15 +104,16 @@ const layout = {
   },
 };
 const formState = reactive({
-  entidad: null,
-  areas_organizacionales: [],
-  codigo_resultado: "",
-  descripcion: null,
-  detalle: "",
+  nueva_descripcion: "",
 });
 
-const onFinish = (values) => {
-  console.log("Success:", values);
+const onFinish = async (data) => {
+  let where = {
+    id: ptdiResultadoStore.ptdiResultado.id,
+  };
+  console.log({ where, data });
+
+  await ptdiResultadoStore.updatePtdiResultado(where, data);
 };
 
 const handleChange = (value) => {
@@ -134,44 +131,6 @@ const handleFocus = () => {
 const filterOption = (input, option) => {
   return option.nombre.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 };
-
-const SHOW_PARENT = TreeSelect.SHOW_PARENT;
-
-const treeData3 = [
-  {
-    title: "Node1",
-    value: "0-0",
-    children: [
-      {
-        title: "Child Node1",
-        value: "0-0-0",
-      },
-    ],
-  },
-  {
-    title: "Node2",
-    value: "0-1",
-    children: [
-      {
-        title: "Child Node3",
-        value: "0-1-0",
-        disabled: true,
-      },
-      {
-        title: "Child Node4",
-        value: "0-1-1",
-      },
-      {
-        title: "Child Node5",
-        value: "0-1-2",
-      },
-    ],
-  },
-];
-
-watch(value, () => {
-  console.log(value.value);
-});
 
 const options3 = ref([
   {
@@ -202,5 +161,9 @@ const handleOk = (e) => {
 const handleCancel = (e) => {
   console.log(e);
   visible.value = false;
+};
+
+const validateMessages = {
+  required: "${label} es requerido!",
 };
 </script>

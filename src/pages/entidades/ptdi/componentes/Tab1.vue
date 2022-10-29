@@ -90,12 +90,6 @@ const validateMessages = {
   required: "${label} es requerido!",
 };
 
-const formState = reactive({
-  sector_planificacion_id: null,
-  lineamiento_estrategico_ptdi: "",
-  objetivo_estrategico_ptdi: "",
-});
-
 const onFinish = (values) => {
   console.log("Success:");
   console.log(values);

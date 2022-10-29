@@ -9,9 +9,9 @@ const ENTIDAD_MUTATION = gql`
             denominacion
             sigla
             departamento {
-            codigo
-            denominacion
-            sigla
+              codigo
+              denominacion
+              sigla
             }
         }
     }
@@ -35,6 +35,17 @@ const ENTIDADES_QUERY = gql`
     }
   }
 `
+
+const ENTIDADES_SELECT_QUERY = gql`
+  query {
+    entidadesInstitucionalesSelect {
+      codigo
+      denominacion
+      sigla
+    }
+  }
+`
+
 const ENTIDAD_QUERY = gql`
   query ($codigo: String){
     entidadInstitucional(codigo: $codigo) {
@@ -92,7 +103,7 @@ const ENTIDAD_QUERY = gql`
             lineamiento_estr_territo
             objetivo_estrategico
           }
-          entidaddes_sigla
+          entidades_sigla
           area_organizacional
           descripcion_resultado
           indicador
@@ -159,6 +170,7 @@ export const useEntidadInstitucionalStore = defineStore({
   id: 'EntidadInstitucionalStore',
   state: () => ({
     entidadesInstitucionales: [],
+    entidadesInstitucionalesSelect: [],
     entidadInstitucional: {}
   }),
   getters: {
@@ -198,6 +210,17 @@ export const useEntidadInstitucionalStore = defineStore({
           variables: {}
         })
         this.entidadesInstitucionales = [...entidadesInstitucionales]
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchEntidadesSelect() {
+      try {
+        const { data : { entidadesInstitucionalesSelect } } = await apolloClient.query({
+          query: ENTIDADES_SELECT_QUERY,
+          variables: {}
+        })
+        this.entidadesInstitucionalesSelect = [...entidadesInstitucionalesSelect]
       } catch (error) {
         console.log(error);
       }

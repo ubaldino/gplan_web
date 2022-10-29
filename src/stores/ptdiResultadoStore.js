@@ -20,6 +20,14 @@ const UPDATE_PTDI_RESULTADO_MUTATION = gql`
   }
 }
 `
+const UPDATE_PTDI_RESULTADO_PROGRAMAS_MUTATION = gql`
+    mutation ( $where:PtdiResultadoUniqueInput, $data: ResultadoProyectoProgInput ) {
+        updatePtdiResultadoProgramas(where: $where, data: $data) {
+            id
+            codigo
+        }
+    }
+`
 
 const PTDI_RESULTADO_QUERY = gql`
     query($where : PtdiResultadoUniqueInput){
@@ -34,12 +42,13 @@ const PTDI_RESULTADO_QUERY = gql`
         pdes_resultado_codigo
         pdes_accion_codigo
         sectorPlanificacion {
-        id
-        nombre
-        lineamiento_estr_territo
-        objetivo_estrategico
+            id
+            nombre
+            lineamiento_estr_territo
+            objetivo_estrategico
         }
-        entidaddes_sigla
+        entidad_codigo
+        entidades_sigla
         area_organizacional
         descripcion_resultado
         indicador
@@ -102,6 +111,19 @@ export const usePtdiResultadoStore = defineStore({
           variables: { where, data }
         })
         res = updatePtdiResultado
+      } catch (error) {
+        console.log(error);
+      }
+      return res
+    },
+    async updatePtdiResultadoProgramas(where, data) {
+      let res = null
+      try {
+        const { data : { updatePtdiResultadoProgramas } } = await apolloClient.mutate({
+          mutation: UPDATE_PTDI_RESULTADO_PROGRAMAS_MUTATION,
+          variables: { where, data }
+        })
+        res = updatePtdiResultadoProgramas
       } catch (error) {
         console.log(error);
       }

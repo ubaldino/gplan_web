@@ -375,6 +375,9 @@
 </template>
 <script setup>
 import { ref, reactive, toRefs, computed, watch } from "vue";
+import { usePtdiResultadoStore } from "../../../../stores/ptdiResultadoStore";
+
+const ptdiResultadoStore = usePtdiResultadoStore();
 
 const layout = {
   labelCol: {

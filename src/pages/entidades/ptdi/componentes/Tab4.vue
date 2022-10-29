@@ -11,34 +11,30 @@
       >
         <a-form-item :name="entidad" label="ENTIDAD">
           <a-select
-            v-model:value="formState.entidad"
-            placeholder="Elija una Entidad"
+            v-model:value="ptdiResultadoStore.ptdiResultado.entidad_codigo"
             show-search
-            style="width: sm"
-            :options="options2"
+            placeholder="Elija un Sector"
             :filter-option="filterOption"
-            @focus="handleFocus"
-            @blur="handleBlur"
-            @change="handleChange"
-          ></a-select>
+          >
+            <a-select-option
+              v-for="sect in entidadInstitucionalStore.entidadesInstitucionalesSelect"
+              :value="sect.codigo"
+              :key="sect.codigo"
+              :nombre="sect.denominacion"
+            >
+              {{ sect.sigla }} - {{ sect.denominacion }}
+            </a-select-option>
+          </a-select>
         </a-form-item>
-        <a-form-item
-          :name="areasorganizacionales"
-          label="ÁREAS ORGANIZACIONALES"
-        >
-          <a-tree-select
-            v-model:value="formState.areas_organizacionales"
-            style="width: sm"
-            :tree-data="treeData3"
-            tree-checkable
-            allow-clear
-            :show-checked-strategy="SHOW_PARENT"
-            placeholder="Elija las Áreas Organizacionales"
+        <a-form-item :name="area_organizacional" label="ÁREAS ORGANIZACIONALES">
+          <a-textarea
+            v-model:value="ptdiResultadoStore.ptdiResultado.area_organizacional"
+            placeholder="Escriba Las areas organizacionales"
           />
         </a-form-item>
-        <a-form-item :name="codigo_resultado" label="CÓDIGO DEL RESULTADO">
+        <a-form-item :name="codigo" label="CÓDIGO DEL RESULTADO">
           <a-input
-            v-model:value="formState.codigo_resultado"
+            v-model:value="ptdiResultadoStore.ptdiResultado.codigo"
             placeholder="Escriba un Código Resultado"
           />
         </a-form-item>
@@ -54,16 +50,19 @@
             @blur="handleBlur"
             @change="handleChange"
           ></a-select>
+          <a-button type="primary" shape="square">+</a-button>
         </a-form-item>
         <a-form-item
           :name="agregar_nuevadescripcion"
           label="AGREGAR DESCRIPCIÓN"
         >
           <div align="left">
-            <a-button type="primary" color:positive @click="showModal"
-              ><template #icon><SearchOutlined /></template>AGREGAR NUEVA
-              DESCRIPCIÓN</a-button
-            >
+            <a-button type="primary" color:positive @click="showModal">
+              <template #icon>
+                <SearchOutlined />
+              </template>
+              AGREGAR NUEVA DESCRIPCIÓN
+            </a-button>
             <a-modal
               v-model:visible="visible"
               height="1000px"
@@ -79,20 +78,26 @@
           </div>
         </a-form-item>
         <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
-          <a-button type="primary" html-type="submit"
-            >GUARDAR RESULTADO</a-button
-          >
+          <a-button type="primary" html-type="submit">
+            GUARDAR RESULTADO
+          </a-button>
         </a-form-item>
       </a-form>
     </a-col>
   </a-row>
 </template>
 <script setup>
-import { DownOutlined } from "@ant-design/icons-vue";
 import { TreeSelect } from "ant-design-vue";
-import { defineComponent, ref, reactive, toRefs, computed, watch } from "vue";
+import { ref, reactive, computed, watch } from "vue";
+import { useEntidadInstitucionalStore } from "../../../../stores/entidadInstitucionalStore";
+import { usePtdiResultadoStore } from "../../../../stores/ptdiResultadoStore";
 
-const activeKey = ref("1");
+const ptdiResultadoStore = usePtdiResultadoStore();
+
+const entidadInstitucionalStore = useEntidadInstitucionalStore();
+
+entidadInstitucionalStore.fetchEntidadesSelect();
+
 const value = ref(undefined);
 const layout = {
   labelCol: {
@@ -127,23 +132,8 @@ const handleFocus = () => {
 };
 
 const filterOption = (input, option) => {
-  return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+  return option.nombre.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 };
-
-const options2 = ref([
-  {
-    value: "gadt",
-    label: "GADT",
-  },
-  {
-    value: "alcaldia",
-    label: "Alcaldía",
-  },
-  {
-    value: "gobernacion",
-    label: "Gobernación",
-  },
-]);
 
 const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
@@ -179,7 +169,6 @@ const treeData3 = [
   },
 ];
 
-const value2 = ref(["0-0-0"]);
 watch(value, () => {
   console.log(value.value);
 });

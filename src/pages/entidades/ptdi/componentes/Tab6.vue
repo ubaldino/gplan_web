@@ -110,6 +110,9 @@
 <script setup>
 import { reactive, watch, onBeforeMount } from "vue";
 import { useDepartamentosStore } from "../../../../stores/departamentosStore";
+import { usePtdiResultadoStore } from "../../../../stores/ptdiResultadoStore";
+
+const ptdiResultadoStore = usePtdiResultadoStore();
 
 const departamentosStore = useDepartamentosStore();
 

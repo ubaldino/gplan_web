@@ -134,6 +134,9 @@
 import { DownOutlined } from "@ant-design/icons-vue";
 import { TreeSelect } from "ant-design-vue";
 import { defineComponent, ref, reactive, toRefs, computed, watch } from "vue";
+import { usePtdiResultadoStore } from "../../../../stores/ptdiResultadoStore";
+
+const ptdiResultadoStore = usePtdiResultadoStore();
 
 const activeKey = ref("1");
 const value = ref(undefined);

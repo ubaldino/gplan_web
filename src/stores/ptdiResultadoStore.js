@@ -51,6 +51,8 @@ const PTDI_RESULTADO_QUERY = gql`
         entidades_sigla
         area_organizacional
         descripcion_resultado
+        indicador_tipo
+        indicador_relativo_denominador
         indicador
         formula
         linea_base
@@ -135,6 +137,7 @@ export const usePtdiResultadoStore = defineStore({
           query: PTDI_RESULTADO_QUERY,
           variables: { where }
         })
+        // console.log(JSON.stringify({...ptdiResultado}, null, 4));
         this.ptdiResultado = {...ptdiResultado}
       } catch (error) {
         console.log(error);

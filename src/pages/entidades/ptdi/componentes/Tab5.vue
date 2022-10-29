@@ -40,7 +40,13 @@
             <a-form-item name="indicador" label="INDICADOR RESULTADO">
               <a-textarea
                 v-model:value="ptdiResultadoStore.ptdiResultado.indicador"
-                placeholder="Escribir el Indicador de Valor Absoluto"
+                placeholder="Escribir el Indicador"
+              />
+            </a-form-item>
+            <a-form-item name="formula" label="FÓRMULA INDICADOR">
+              <a-textarea
+                v-model:value="ptdiResultadoStore.ptdiResultado.formula"
+                placeholder="Escribir la Fórmula del Indicador"
               />
             </a-form-item>
           </a-col>
@@ -64,30 +70,20 @@
         >
           <a-col :xs="18" :sm="18" :md="18" :lg="18" :xl="18">
             <a-form-item
-              name="indicador_resultado_relativo"
-              label="INDICADOR RESULTADO RELATIVO"
+              name="indicador_relativo_denominador"
+              label="TIPO DE DENOMINADOR"
             >
-              <a-textarea
-                v-model:value="formState.indicador_resultado_relativo"
-                placeholder="Elija Indicador Relativo"
-              />
-            </a-form-item>
-            <a-form-item
-              name="formula_relativo"
-              label="FÓRMULA INDICADOR RELATIVO"
-            >
-              <a-input
-                v-model:value="formState.formula_relativo"
-                placeholder="Escribir la Fórmula de Valor Relativo"
-              />
-            </a-form-item>
-            <a-form-item
-              name="encendido_denominador_relativo"
-              label="ELEGIR TIPO DE DENOMINADOR"
-            >
-              <a-radio-group v-model:value="value3" name="radioGroup">
-                <a-radio value="1">Denominador Variable</a-radio>
-                <a-radio value="2">Denominador Fijo</a-radio>
+              <a-radio-group
+                v-model:value="
+                  ptdiResultadoStore.ptdiResultado
+                    .indicador_relativo_denominador
+                "
+                name="indicador_relativo_denominador"
+              >
+                <a-radio-button value="VARIABLE"
+                  >Denominador Variable</a-radio-button
+                >
+                <a-radio-button value="FIJO">Denominador Fijo</a-radio-button>
               </a-radio-group>
             </a-form-item>
           </a-col>
@@ -95,34 +91,15 @@
 
         <a-row type="flex" justify="space-around" align="middle">
           <a-col :xs="18" :sm="18" :md="18" :lg="18" :xl="18">
-            <a-form-item
-              name="formula_absoluto"
-              label="FÓRMULA INDICADOR ABSOLUTO"
-            >
-              <a-input
-                v-model:value="formState.formula_absoluto"
-                placeholder="Escribir la Fórmula de Valor Absoluto"
-              />
-            </a-form-item>
-            <a-form-item
-              name="lineabase_2020_absoluto"
-              label="LINEA BASE 2020"
-              :rules="[{ type: 'number', min: 0, max: 100 }]"
-            >
+            <a-form-item name="linea_base" label="LINEA BASE 2020">
               <a-input-number
-                v-model:value="formState.linea_base_2020_absoluto"
-                style="width: 200px"
+                v-model:value="ptdiResultadoStore.ptdiResultado.linea_base"
                 placeholder="Escribir la Linea Base al 2020"
               />
             </a-form-item>
-            <a-form-item
-              name="meta_al_2025_absoluto"
-              label="META AL 2025"
-              :rules="[{ type: 'number', min: 0, max: 100 }]"
-            >
+            <a-form-item name="meta_estimacion" label="META AL 2025">
               <a-input-number
-                v-model:value="formState.meta_al_2025_absoluto"
-                style="width: 200px"
+                v-model:value="ptdiResultadoStore.ptdiResultado.meta_estimacion"
                 placeholder="Escribir la Meta al 2025"
               />
             </a-form-item>
@@ -137,10 +114,7 @@
               <a-col>
                 <a-col> 2021 </a-col>
                 <a-col>
-                  <a-form-item
-                    name="meta_prog_2021"
-                    :rules="[{ type: 'number', min: 0, max: 100 }]"
-                  >
+                  <a-form-item name="meta_prog_2021">
                     <a-input-number
                       v-model:value="
                         ptdiResultadoStore.ptdiResultado.meta_prog_2021
@@ -152,10 +126,7 @@
               <a-col>
                 <a-col> 2022 </a-col>
                 <a-col>
-                  <a-form-item
-                    name="meta_prog_2022"
-                    :rules="[{ type: 'number', min: 0, max: 100 }]"
-                  >
+                  <a-form-item name="meta_prog_2022">
                     <a-input-number
                       v-model:value="
                         ptdiResultadoStore.ptdiResultado.meta_prog_2022
@@ -167,10 +138,7 @@
               <a-col>
                 <a-col> 2023 </a-col>
                 <a-col>
-                  <a-form-item
-                    name="meta_prog_2023"
-                    :rules="[{ type: 'number', min: 0, max: 100 }]"
-                  >
+                  <a-form-item name="meta_prog_2023">
                     <a-input-number
                       v-model:value="
                         ptdiResultadoStore.ptdiResultado.meta_prog_2023
@@ -182,10 +150,7 @@
               <a-col>
                 <a-col> 2024 </a-col>
                 <a-col>
-                  <a-form-item
-                    name="meta_prog_2024"
-                    :rules="[{ type: 'number', min: 0, max: 100 }]"
-                  >
+                  <a-form-item name="meta_prog_2024">
                     <a-input-number
                       v-model:value="
                         ptdiResultadoStore.ptdiResultado.meta_prog_2024
@@ -197,10 +162,7 @@
               <a-col>
                 <a-col> 2025 </a-col>
                 <a-col>
-                  <a-form-item
-                    name="meta_prog_2025"
-                    :rules="[{ type: 'number', min: 0, max: 100 }]"
-                  >
+                  <a-form-item name="meta_prog_2025">
                     <a-input-number
                       v-model:value="
                         ptdiResultadoStore.ptdiResultado.meta_prog_2025
@@ -216,25 +178,20 @@
 
         <a-row type="flex" justify="space-around" align="middle">
           <a-col :xs="18" :sm="18" :md="18" :lg="18" :xl="18">
-            <a-form-item
-              name="ponderacion_prioridad_absoluto"
-              label="PONDERACIÓN DE PRIORIDAD"
-              :rules="[{ type: 'number', min: 0, max: 100 }]"
-            >
+            <a-form-item name="ponderacion" label="PONDERACIÓN DE PRIORIDAD">
               <a-input-number
-                v-model:value="formState.ponderacion_prioridad_absoluto"
+                v-model:value="ptdiResultadoStore.ptdiResultado.ponderacion"
                 style="width: 200px"
                 placeholder="Ponderación de prioridad"
               />
             </a-form-item>
             <a-form-item
-              name="fuente_informacion_verificacion_absoluto"
+              name="fuente_informacion"
               label="FUENTE DE INFORMACIÓN O VERIFICACIÓN"
-              :rules="[{ type: 'number', min: 0, max: 100 }]"
             >
               <a-textarea
                 v-model:value="
-                  formState.fuente_informacion_verificacion_absoluto
+                  ptdiResultadoStore.ptdiResultado.fuente_informacion
                 "
                 placeholder="Escribir la Fuente de Información"
               />
@@ -243,7 +200,7 @@
         </a-row>
 
         <a-row type="flex" justify="space-around" align="middle">
-          <a-col :xs="18" :sm="18" :md="18" :lg="18" :xl="18">
+          <a-col :xs="24" :sm="18" :md="18" :lg="18" :xl="18">
             <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
               <a-button type="primary" html-type="submit">
                 GUARDAR INDICADOR RESULTADO
@@ -256,7 +213,7 @@
   </a-row>
 </template>
 <script setup>
-import { ref, reactive, toRefs, computed, watch } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import { usePtdiResultadoStore } from "../../../../stores/ptdiResultadoStore";
 
 const ptdiResultadoStore = usePtdiResultadoStore();
@@ -270,35 +227,21 @@ const layout = {
   },
 };
 
-const formState = reactive({
-  tipo_indicador_absoluto: null,
-  indicador_resultado_absoluto: "",
-  formula_absoluto: "",
-  linea_base_2020_absoluto: undefined,
-  meta_al_2025_absoluto: undefined,
-  linea_2021_absoluto: undefined,
-  linea_2022_absoluto: undefined,
-  linea_2023_absoluto: undefined,
-  linea_2024_absoluto: undefined,
-  linea_2025_absoluto: undefined,
-  ponderacion_prioridad_absoluto: undefined,
-  fuente_informacion_verificacion_absoluto: undefined,
-  tipo_indicador_relativo: null,
-  indicador_resultado_relativo: "",
-  formula_relativo: "",
-  linea_base_2020_relativo: undefined,
-  meta_al_2025_relativo: undefined,
-  linea_2021_relativo: undefined,
-  linea_2022_relativo: undefined,
-  linea_2023_relativo: undefined,
-  linea_2024_relativo: undefined,
-  linea_2025_relativo: undefined,
-  ponderacion_prioridad_relativo: undefined,
-  fuente_informacion_verificacion_relativo: undefined,
-});
+const onFinish = async (data) => {
+  let where = {
+    id: ptdiResultadoStore.ptdiResultado.id,
+  };
+  console.log({ where, data });
+  data.linea_base = parseFloat(data.linea_base);
+  data.meta_estimacion = parseFloat(data.meta_estimacion);
+  data.meta_prog_2021 = parseFloat(data.meta_prog_2021);
+  data.meta_prog_2022 = parseFloat(data.meta_prog_2022);
+  data.meta_prog_2023 = parseFloat(data.meta_prog_2023);
+  data.meta_prog_2024 = parseFloat(data.meta_prog_2024);
+  data.meta_prog_2025 = parseFloat(data.meta_prog_2025);
+  data.ponderacion = parseFloat(data.ponderacion);
 
-const onFinish = (values) => {
-  console.log("Success:", values);
+  await ptdiResultadoStore.updatePtdiResultado(where, data);
 };
 
 const checkChange = () => {
@@ -313,8 +256,6 @@ const layout3 = {
     span: 16,
   },
 };
-
-const value3 = ref("1");
 
 const size = ref(50);
 

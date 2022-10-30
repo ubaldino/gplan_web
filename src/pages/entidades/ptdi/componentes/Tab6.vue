@@ -1,7 +1,7 @@
 <template>
   <h6>Territorialización Resultado</h6>
   <a-form
-    :model="formState"
+    :model="ptdiResultadoStore.ptdiResultado"
     v-bind="layout"
     layout="vertical"
     name="territorializacion"
@@ -14,14 +14,18 @@
           <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <a-form-item
               label="Departamento"
-              name="departamento_id"
+              name="departamento_codigo"
               :rules="[{ required: true }]"
             >
-              <a-select v-model:value="formState.departamento_id">
+              <a-select
+                v-model:value="
+                  ptdiResultadoStore.ptdiResultado.departamento_codigo
+                "
+              >
                 <a-select-option
                   v-for="dep in departamentosStore.departamentosSelect"
-                  :value="dep.id"
-                  :key="dep.id"
+                  :value="dep.codigo"
+                  :key="dep.codigo"
                 >
                   {{ dep.denominacion }}
                 </a-select-option>
@@ -38,7 +42,7 @@
               :rules="[{ required: true }]"
             >
               <a-textarea
-                v-model:value="formState.region"
+                v-model:value="ptdiResultadoStore.ptdiResultado.region"
                 placeholder="Escriba la Region"
                 auto-size
               />
@@ -48,17 +52,19 @@
 
         <a-row type="flex" justify="space-around" align="middle">
           <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <a-form-item label="Municipios" name="municipios_id">
+            <a-form-item label="Municipios" name="municipios_codigo">
               <a-select
                 mode="multiple"
-                v-model:value="formState.municipios_id"
+                v-model:value="
+                  ptdiResultadoStore.ptdiResultado.municipios_codigo
+                "
                 :filter-option="filterOption"
                 placeholder="Elija los municipios"
               >
                 <a-select-option
                   v-for="mun in formState.municipios"
-                  :value="mun.id"
-                  :key="mun.id"
+                  :value="mun.codigo"
+                  :key="mun.codigo"
                   :nombre="mun.denominacion"
                 >
                   {{ mun.denominacion }}
@@ -70,11 +76,17 @@
 
         <a-row type="flex" justify="space-around" align="middle">
           <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <a-form-item name="tipo_distrito" label="Tipo Distrito">
-              <a-radio-group v-model:value="formState.tipo_distritos">
-                <a-radio-button value="urbano">URBANO</a-radio-button>
-                <a-radio-button value="rural">RURAL</a-radio-button>
-              </a-radio-group>
+            <a-form-item label="Tipo Distritos" name="distritos_tipo">
+              <a-checkbox-group
+                v-model:value="ptdiResultadoStore.ptdiResultado.distritos_tipo"
+              >
+                <a-checkbox value="urbano" name="distritos_tipo">
+                  URBANO
+                </a-checkbox>
+                <a-checkbox value="rural" name="distritos_tipo">
+                  RURAL
+                </a-checkbox>
+              </a-checkbox-group>
             </a-form-item>
           </a-col>
         </a-row>
@@ -87,7 +99,7 @@
               :rules="[{ required: true }]"
             >
               <a-textarea
-                v-model:value="formState.distritos"
+                v-model:value="ptdiResultadoStore.ptdiResultado.distritos"
                 placeholder="Escriba el Distrito"
                 auto-size
               />
@@ -130,12 +142,11 @@ const formState = reactive({
 });
 
 watch(
-  () => formState.departamento_id,
+  () => ptdiResultadoStore.ptdiResultado.departamento_codigo,
   (newData, oldData) => {
     formState.municipios = newData
-      ? departamentosStore.departamentosSelect.find(
-          (e) => e.id === parseInt(newData)
-        ).municipios
+      ? departamentosStore.departamentosSelect.find((e) => e.codigo === newData)
+          .municipios
       : [];
   }
 );
@@ -150,8 +161,17 @@ const layout = {
   },
 };
 
-const onFinish = (values) => {
-  console.log("Success:", values);
+const onFinish = async (data) => {
+  console.log(data);
+  //   municipios_codigo
+  data.municipios_sigla = formState.municipios
+    .filter((e) => data.municipios_codigo.includes(e.codigo))
+    .map((e) => e.sigla);
+
+  let where = {
+    id: ptdiResultadoStore.ptdiResultado.id,
+  };
+  await ptdiResultadoStore.updatePtdiResultado(where, data);
 };
 
 const filterOption = (input, option) => {

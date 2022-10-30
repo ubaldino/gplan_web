@@ -30,7 +30,7 @@ const UPDATE_PTDI_RESULTADO_PROGRAMAS_MUTATION = gql`
 `
 
 const PTDI_RESULTADO_QUERY = gql`
-    query($where : PtdiResultadoUniqueInput){
+  query($where : PtdiResultadoUniqueInput){
     ptdiResultado(where: $where) {
         id
         codigo
@@ -70,8 +70,8 @@ const PTDI_RESULTADO_QUERY = gql`
         region
         municipios_codigo
         municipios_sigla
-        urbano_rural
-        distrito
+        distritos_tipo
+        distritos
         presup_total
         presupuesto_2021
         presupuesto_2022
@@ -81,7 +81,7 @@ const PTDI_RESULTADO_QUERY = gql`
         created_at
         updated_at
     }
-    }
+  }
 
 `
 

@@ -98,14 +98,17 @@ const ENTIDAD_QUERY = gql`
           pdes_resultado_codigo
           pdes_accion_codigo
           sectorPlanificacion {
-            id
-            nombre
-            lineamiento_estr_territo
-            objetivo_estrategico
+              id
+              nombre
+              lineamiento_estr_territo
+              objetivo_estrategico
           }
+          entidad_codigo
           entidades_sigla
           area_organizacional
           descripcion_resultado
+          indicador_tipo
+          indicador_relativo_denominador
           indicador
           formula
           linea_base
@@ -123,8 +126,8 @@ const ENTIDAD_QUERY = gql`
           region
           municipios_codigo
           municipios_sigla
-          urbano_rural
-          distrito
+          distritos_tipo
+          distritos
           presup_total
           presupuesto_2021
           presupuesto_2022

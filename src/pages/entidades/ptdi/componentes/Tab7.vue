@@ -3,8 +3,8 @@
     <a-col :xs="24" :sm="24" :md="20" :lg="16" :xl="16">
       <h6>Presupuesto Quinquenal</h6>
       <a-form
-        :model="formState"
-        v-bind="layout4"
+        :model="ptdiResultadoStore.ptdiResultado"
+        v-bind="layout"
         layout="vertical"
         name="nest-messages"
         :validate-messages="validateMessages"
@@ -15,85 +15,65 @@
             <a-row type="flex" justify="space-around" align="middle">
               <a-col :xs="24" :sm="6" :md="4" :lg="4" :xl="4">
                 <a-form-item
-                  :name="[
-                    'formtab6programacionfinanciera',
-                    'programacionfinanciera2021',
-                  ]"
                   label="2021"
-                  :rules="[{ type: 'number', min: 0, max: 100 }]"
+                  name="presupuesto_2021"
+                  :rules="[{ type: 'number', min: 0 }]"
                 >
                   <a-input-number
                     v-model:value="
-                      formState.formtab6programacionfinanciera
-                        .programacionfinanciera2021
+                      ptdiResultadoStore.ptdiResultado.presupuesto_2021
                     "
                   />
                 </a-form-item>
               </a-col>
               <a-col :xs="24" :sm="6" :md="4" :lg="4" :xl="4">
                 <a-form-item
-                  :name="[
-                    'formtab6programacionfinanciera',
-                    'programacionfinanciera2022',
-                  ]"
-                  :rules="[{ type: 'number', min: 0, max: 100 }]"
                   label="2022"
+                  name="presupuesto_2022"
+                  :rules="[{ type: 'number', min: 0 }]"
                 >
                   <a-input-number
                     v-model:value="
-                      formState.formtab6programacionfinanciera
-                        .programacionfinanciera2022
+                      ptdiResultadoStore.ptdiResultado.presupuesto_2022
                     "
                   />
                 </a-form-item>
               </a-col>
               <a-col :xs="24" :sm="6" :md="4" :lg="4" :xl="4">
                 <a-form-item
-                  :name="[
-                    'formtab6programacionfinanciera',
-                    'programacionfinanciera2023',
-                  ]"
-                  :rules="[{ type: 'number', min: 0, max: 100 }]"
                   label="2023"
+                  name="presupuesto_2023"
+                  :rules="[{ type: 'number', min: 0 }]"
                 >
                   <a-input-number
                     v-model:value="
-                      formState.formtab6programacionfinanciera
-                        .programacionfinanciera2023
+                      ptdiResultadoStore.ptdiResultado.presupuesto_2023
                     "
                   />
                 </a-form-item>
               </a-col>
               <a-col :xs="24" :sm="6" :md="4" :lg="4" :xl="4">
                 <a-form-item
-                  :name="[
-                    'formtab6programacionfinanciera',
-                    'programacionfinanciera2024',
-                  ]"
-                  :rules="[{ type: 'number', min: 0, max: 100 }]"
+                  name="presupuesto_2024"
+                  :rules="[{ type: 'number', min: 0 }]"
                   label="2024"
                 >
                   <a-input-number
                     v-model:value="
-                      formState.formtab6programacionfinanciera
-                        .programacionfinanciera2024
+                      ptdiResultadoStore.ptdiResultado.presupuesto_2024
                     "
                   />
                 </a-form-item>
               </a-col>
               <a-col :xs="24" :sm="6" :md="4" :lg="4" :xl="4">
                 <a-form-item
-                  :name="[
-                    'formtab6programacionfinanciera',
-                    'programacionfinanciera2025',
-                  ]"
-                  :rules="[{ type: 'number', min: 0, max: 100 }]"
+                  name="presupuesto_2025"
+                  :rules="[{ type: 'number', min: 0 }]"
                   label="2025"
                 >
                   <a-input-number
                     v-model:value="
-                      formState.formtab6programacionfinanciera
-                        .programacionfinanciera2025
+                      ptdiResultadoStore.ptdiResultado.presupuesto_2025
                     "
                   />
                 </a-form-item>
@@ -109,20 +89,18 @@
           </a-col>
           <a-col :xs="24" :sm="24" :md="16" :lg="16" :xl="16">
             <a-form-item
-              :name="['formtab6programacionfinanciera', 'sumatotal']"
+              name="presup_total"
               label="SUMA TOTAL"
-              :rules="[{ type: 'number', min: 0, max: 100 }]"
+              :rules="[{ type: 'number', min: 0 }]"
             >
               <a-input-number
-                v-model:value="
-                  formState.formtab6programacionfinanciera.sumatotal
-                "
+                v-model:value="ptdiResultadoStore.ptdiResultado.presup_total"
               />
             </a-form-item>
             <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
-              <a-button type="primary" html-type="submit"
-                >GUARDAR PROGRAMACIÓN FINANCIERA</a-button
-              >
+              <a-button type="primary" html-type="submit">
+                GUARDAR PROGRAMACIÓN FINANCIERA
+              </a-button>
             </a-form-item>
           </a-col>
         </a-row>
@@ -133,13 +111,11 @@
 <script setup>
 import { DownOutlined } from "@ant-design/icons-vue";
 import { TreeSelect } from "ant-design-vue";
-import { defineComponent, ref, reactive, toRefs, computed, watch } from "vue";
+import { ref, reactive, toRefs, computed, watch } from "vue";
 import { usePtdiResultadoStore } from "../../../../stores/ptdiResultadoStore";
 
 const ptdiResultadoStore = usePtdiResultadoStore();
 
-const activeKey = ref("1");
-const value = ref(undefined);
 const layout = {
   labelCol: {
     span: 8,
@@ -148,52 +124,9 @@ const layout = {
     span: 16,
   },
 };
-const formState = reactive({
-  formtab6programacionfinanciera: {
-    programacionfinanciera2021: undefined,
-    programacionfinanciera2022: undefined,
-    programacionfinanciera2023: undefined,
-    programacionfinanciera2024: undefined,
-    programacionfinanciera2025: undefined,
-    sumatotal: undefined,
-    website: "",
-    introduction: "",
-  },
-});
 
-const onFinish = (values) => {
-  console.log("Success:", values);
-};
-
-const handleChange = (value) => {
-  console.log(`selected ${value}`);
-};
-
-const handleBlur = () => {
-  console.log("blur");
-};
-
-const handleFocus = () => {
-  console.log("focus");
-};
-
-const filterOption = (input, option) => {
-  return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-};
-
-const checked = ref(false);
-
-const checked2 = ref(true);
-
-const value3 = ref("1");
-
-const layout4 = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
+const onFinish = (data) => {
+  console.log("Success:", data);
 };
 
 const validateMessages = {

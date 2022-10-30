@@ -98,10 +98,14 @@ const ENTIDAD_QUERY = gql`
           pdes_resultado_codigo
           pdes_accion_codigo
           sectorPlanificacion {
-              id
-              nombre
-              lineamiento_estr_territo
-              objetivo_estrategico
+            id
+            nombre
+            lineamiento_estr_territo
+            objetivo_estrategico
+          }
+          proyectosProgramaElegidos {
+            id
+            da_ue_cat
           }
           entidad_codigo
           entidades_sigla

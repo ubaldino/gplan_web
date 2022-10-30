@@ -47,6 +47,10 @@ const PTDI_RESULTADO_QUERY = gql`
             lineamiento_estr_territo
             objetivo_estrategico
         }
+        proyectosProgramaElegidos {
+          id
+          da_ue_cat
+        }
         entidad_codigo
         entidades_sigla
         area_organizacional

@@ -36,11 +36,7 @@
 
         <a-row type="flex" justify="space-around" align="middle">
           <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <a-form-item
-              label="Region"
-              name="region"
-              :rules="[{ required: true }]"
-            >
+            <a-form-item label="Region" name="region">
               <a-textarea
                 v-model:value="ptdiResultadoStore.ptdiResultado.region"
                 placeholder="Escriba la Region"
@@ -93,11 +89,7 @@
 
         <a-row type="flex" justify="space-around" align="middle">
           <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <a-form-item
-              label="Distrito"
-              name="distritos"
-              :rules="[{ required: true }]"
-            >
+            <a-form-item label="Distrito" name="distritos">
               <a-textarea
                 v-model:value="ptdiResultadoStore.ptdiResultado.distritos"
                 placeholder="Escriba el Distrito"
@@ -144,10 +136,14 @@ const formState = reactive({
 watch(
   () => ptdiResultadoStore.ptdiResultado.departamento_codigo,
   (newData, oldData) => {
-    formState.municipios = newData
-      ? departamentosStore.departamentosSelect.find((e) => e.codigo === newData)
-          .municipios
-      : [];
+    console.log("newData", newData);
+    try {
+      formState.municipios = newData
+        ? departamentosStore.departamentosSelect.find(
+            (e) => e.codigo === newData
+          ).municipios
+        : [];
+    } catch (error) {}
   }
 );
 
@@ -162,8 +158,11 @@ const layout = {
 };
 
 const onFinish = async (data) => {
-  console.log(data);
-  //   municipios_codigo
+  const dep = departamentosStore.departamentosSelect.find(
+    (e) => data.departamento_codigo == e.codigo
+  );
+  data.departamento_sigla = dep.sigla;
+
   data.municipios_sigla = formState.municipios
     .filter((e) => data.municipios_codigo.includes(e.codigo))
     .map((e) => e.sigla);
@@ -171,6 +170,7 @@ const onFinish = async (data) => {
   let where = {
     id: ptdiResultadoStore.ptdiResultado.id,
   };
+  console.log({ where, data });
   await ptdiResultadoStore.updatePtdiResultado(where, data);
 };
 

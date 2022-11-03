@@ -14,15 +14,13 @@
           <a-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
             <a-row type="flex" justify="space-around" align="middle">
               <a-col :xs="24" :sm="6" :md="4" :lg="4" :xl="4">
-                <a-form-item
-                  label="2021"
-                  name="presupuesto_2021"
-                  :rules="[{ type: 'number', min: 0 }]"
-                >
+                <a-form-item label="2021" name="presupuesto_2021">
                   <a-input-number
                     v-model:value="
                       ptdiResultadoStore.ptdiResultado.presupuesto_2021
                     "
+                    :min="0"
+                    string-mode
                   />
                 </a-form-item>
               </a-col>
@@ -53,11 +51,7 @@
                 </a-form-item>
               </a-col>
               <a-col :xs="24" :sm="6" :md="4" :lg="4" :xl="4">
-                <a-form-item
-                  name="presupuesto_2024"
-                  :rules="[{ type: 'number', min: 0 }]"
-                  label="2024"
-                >
+                <a-form-item name="presupuesto_2024" label="2024">
                   <a-input-number
                     v-model:value="
                       ptdiResultadoStore.ptdiResultado.presupuesto_2024
@@ -66,11 +60,7 @@
                 </a-form-item>
               </a-col>
               <a-col :xs="24" :sm="6" :md="4" :lg="4" :xl="4">
-                <a-form-item
-                  name="presupuesto_2025"
-                  :rules="[{ type: 'number', min: 0 }]"
-                  label="2025"
-                >
+                <a-form-item name="presupuesto_2025" label="2025">
                   <a-input-number
                     v-model:value="
                       ptdiResultadoStore.ptdiResultado.presupuesto_2025
@@ -88,11 +78,7 @@
             <h6 align="left">Total Quinquenal</h6>
           </a-col>
           <a-col :xs="24" :sm="24" :md="16" :lg="16" :xl="16">
-            <a-form-item
-              name="presup_total"
-              label="SUMA TOTAL"
-              :rules="[{ type: 'number', min: 0 }]"
-            >
+            <a-form-item name="presup_total" label="SUMA TOTAL">
               <a-input-number
                 v-model:value="ptdiResultadoStore.ptdiResultado.presup_total"
               />
@@ -125,8 +111,55 @@ const layout = {
   },
 };
 
-const onFinish = (data) => {
-  console.log("Success:", data);
+const recalcularTotal = () => {
+  ptdiResultadoStore.ptdiResultado.presup_total =
+    parseFloat(ptdiResultadoStore.ptdiResultado.presupuesto_2021) +
+    parseFloat(ptdiResultadoStore.ptdiResultado.presupuesto_2022) +
+    parseFloat(ptdiResultadoStore.ptdiResultado.presupuesto_2023) +
+    parseFloat(ptdiResultadoStore.ptdiResultado.presupuesto_2024) +
+    parseFloat(ptdiResultadoStore.ptdiResultado.presupuesto_2025);
+};
+
+watch(
+  () => ptdiResultadoStore.ptdiResultado.presupuesto_2021,
+  (newData, oldData) => recalcularTotal()
+);
+watch(
+  () => ptdiResultadoStore.ptdiResultado.presupuesto_2022,
+  (newData, oldData) => recalcularTotal()
+);
+watch(
+  () => ptdiResultadoStore.ptdiResultado.presupuesto_2023,
+  (newData, oldData) => recalcularTotal()
+);
+watch(
+  () => ptdiResultadoStore.ptdiResultado.presupuesto_2024,
+  (newData, oldData) => recalcularTotal()
+);
+watch(
+  () => ptdiResultadoStore.ptdiResultado.presupuesto_2025,
+  (newData, oldData) => recalcularTotal()
+);
+
+watch(
+  () => ptdiResultadoStore.ptdiResultado.presupuesto_2021,
+  (newData, oldData) => {
+    ptdiResultadoStore.ptdiResultado.presup_total =
+      parseFloat(ptdiResultadoStore.ptdiResultado.presupuesto_2021) +
+      parseFloat(ptdiResultadoStore.ptdiResultado.presupuesto_2022) +
+      parseFloat(ptdiResultadoStore.ptdiResultado.presupuesto_2023) +
+      parseFloat(ptdiResultadoStore.ptdiResultado.presupuesto_2024) +
+      parseFloat(ptdiResultadoStore.ptdiResultado.presupuesto_2025);
+  }
+);
+
+const onFinish = async (data) => {
+  let where = {
+    id: ptdiResultadoStore.ptdiResultado.id,
+  };
+  console.log({ where, data });
+
+  await ptdiResultadoStore.updatePtdiResultado(where, data);
 };
 
 const validateMessages = {

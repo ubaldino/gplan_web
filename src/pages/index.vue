@@ -114,6 +114,14 @@
                             color="secondary"
                             label="TECNICOS"
                           />
+                          <q-btn
+                            v-if="entidad.ptdi"
+                            align="right"
+                            class="btn-fixed-width"
+                            color="secondary"
+                            label="Reporte"
+                            @click="generarReporte(entidad)"
+                          />
                         </a-card>
                       </a-col>
                     </a-row>
@@ -132,13 +140,45 @@
 <script setup>
 import LogoVue from "../components/Logo.vue";
 import { useDepartamentosStore } from "../stores/departamentosStore";
+import { usePtdiReporteStore } from "../stores/ptdiReporteStore";
+import axios from "axios";
 
+axios.defaults.withCredentials = true;
 const departamentosStore = useDepartamentosStore();
+const ptdiReporteStore = usePtdiReporteStore();
 
 departamentosStore.fetchDepartamentos();
 // departamentosStore.fetchParaQuinquenios();
 
 document.title = "Inicio de GPLAN";
 
-console.log(JSON.stringify(import.meta.env, null, 4));
+const generarReporte = async (entidad) => {
+  console.log(entidad.codigo);
+
+  const res = await ptdiReporteStore.fetchPtdiReporte({
+    codigo: entidad.codigo,
+  });
+
+  const link = document.createElement("a");
+  link.href = res.link;
+  link.download = res.nombre;
+  link.click();
+  URL.revokeObjectURL(link.href);
+
+  /*
+  axios
+    .get(res.link, { responseType: "blob", headers: {'Access-Control-Allow-Origin': '*'} })
+    .then((response) => {
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = label;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    })
+    .catch(console.error);
+  */
+};
 </script>

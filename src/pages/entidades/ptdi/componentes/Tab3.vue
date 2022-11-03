@@ -42,7 +42,12 @@
         <h6>Resultado del Programa o Proyecto</h6>
       </div>
       <div align="right">
-        <a-button class="btn-fixed-width" type="primary" html-type="submit">
+        <a-button
+          class="btn-fixed-width"
+          type="primary"
+          html-type="submit"
+          @click="guardarDatos"
+        >
           GUARDAR PROGRAMAS
         </a-button>
       </div>
@@ -56,9 +61,11 @@ import { TreeSelect } from "ant-design-vue";
 import { reactive, computed, watch } from "vue";
 import { useAperturaProgramaticaStore } from "../../../../stores/aperturaProgramaticaStore";
 import { useProyectoProgramaStore } from "../../../../stores/proyectoProgramaStore";
+import { usePtdiResultadoStore } from "../../../../stores/ptdiResultadoStore";
 
 const aperturaProgramaticaStore = useAperturaProgramaticaStore();
 const proyectoProgramaStore = useProyectoProgramaStore();
+const ptdiResultadoStore = usePtdiResultadoStore();
 
 aperturaProgramaticaStore.fetchAllTree();
 
@@ -77,6 +84,20 @@ watch(
     proyectoProgramaStore.fetchAll({ categorias_programatica });
   }
 );
+
+const guardarDatos = async () => {
+  console.log();
+  const da_ue_cat = proyectoProgramaStore.proyectosPrograma.map(
+    (e) => e.da_ue_cat_real
+  );
+  const where = {
+    id: ptdiResultadoStore.ptdiResultado.id,
+  };
+  const data = {
+    da_ue_cat,
+  };
+  await ptdiResultadoStore.updatePtdiResultadoProgramas(where, data);
+};
 
 const columns = [
   {
